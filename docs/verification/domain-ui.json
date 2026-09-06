@@ -1,0 +1,20 @@
+{
+  "base": "https://gaze.pajama.studio",
+  "checkedAt": "2026-09-06T23:35:22.423Z",
+  "passed": [
+    "HTTPS document and video playback",
+    "Pajama Studio title and workspace branding",
+    "GitHub source link points to pajama-studio/gaze-studio",
+    "Mobile dataset navigation"
+  ],
+  "resolver": "Process-local mapping to 172.64.80.1, independently returned by Cloudflare and Google public DNS; local router still cached pre-creation NXDOMAIN. TLS validation remained enabled.",
+  "defaultResolverRecheck": {
+    "checkedAt": "2026-09-06T23:36:23.394Z",
+    "passed": [
+      "HTTPS app navigation through default resolver",
+      "Pajama Studio title",
+      "Default example video loads and seeks to two seconds"
+    ],
+    "resolver": "Default Chromium/system DNS, no overrides"
+  }
+}

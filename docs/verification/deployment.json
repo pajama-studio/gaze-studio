@@ -1,12 +1,25 @@
 {
   "verifiedOn": "2026-09-06",
-  "url": "https://cogix-gaze-studio.radiantclay.workers.dev",
-  "cloudflareVersion": "ff20ae31-e264-4257-ae1c-1baf6f5f4e7b",
+  "url": "https://gaze.pajama.studio",
+  "repository": "https://github.com/pajama-studio/gaze-studio",
+  "applicationCommit": "3141b9fefa0004e1191f2239d51e2cfb61a136dc",
+  "cloudflareVersion": "93648ec6-3823-4493-9bdf-7f0dd137ede2",
+  "ci": "https://github.com/pajama-studio/gaze-studio/actions/runs/34067238558",
+  "ciConclusion": "success",
   "unitTestsPassed": 50,
-  "productionApiChecksPassed": 13,
-  "productionBrowserFlowsPassed": 11,
-  "additionalUiChecksPassed": 3,
-  "realWorkersAiRequests": 7,
+  "customDomainApiChecksPassed": 13,
+  "customDomainBrowserFlowsPassed": 11,
+  "realWorkersAiRequestsBeforeDomainBinding": 7,
   "webcamModelAccuracyMeasured": false,
-  "notes": "Research preview. Numerical fixture and playback conformance establish software behavior, not human webcam accuracy."
+  "resolver": "Process-local mapping to 172.64.80.1, independently returned by Cloudflare and Google public DNS; local router cached pre-creation NXDOMAIN. TLS validation remained enabled.",
+  "notes": "Published reports distinguish pre-domain and custom-domain runs. Metrics establish software behavior, not human webcam accuracy.",
+  "defaultResolverRecheck": {
+    "checkedAt": "2026-09-06T23:36:23.393Z",
+    "passed": [
+      "HTTPS app navigation through default resolver",
+      "Pajama Studio title",
+      "Default example video loads and seeks to two seconds"
+    ],
+    "resolver": "Default Chromium/system DNS, no overrides"
+  }
 }

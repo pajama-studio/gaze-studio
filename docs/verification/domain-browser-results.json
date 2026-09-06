@@ -1,0 +1,19 @@
+{
+  "base": "https://gaze.pajama.studio",
+  "checkedAt": "2026-09-06T23:34:50.011Z",
+  "passed": [
+    "real dataset and analysis worker",
+    "native video playback and seek",
+    "manual rectangle annotation",
+    "dynamic AOI keyframe and undo",
+    "polygon annotation",
+    "independent analysis and exports",
+    "portable package round trip with original raw data",
+    "Cloudflare R2 upload and cloud catalog",
+    "cloud data cleanup",
+    "dataset discovery filter",
+    "mobile layout and import"
+  ],
+  "errors": [],
+  "resolver": "Process-local mapping to 172.64.80.1, independently returned by Cloudflare and Google public DNS; local router cached pre-creation NXDOMAIN. TLS validation remained enabled."
+}

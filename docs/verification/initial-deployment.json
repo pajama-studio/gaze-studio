@@ -1,0 +1,12 @@
+{
+  "verifiedOn": "2026-09-06",
+  "url": "https://cogix-gaze-studio.radiantclay.workers.dev",
+  "cloudflareVersion": "ff20ae31-e264-4257-ae1c-1baf6f5f4e7b",
+  "unitTestsPassed": 50,
+  "productionApiChecksPassed": 13,
+  "productionBrowserFlowsPassed": 11,
+  "additionalUiChecksPassed": 3,
+  "realWorkersAiRequests": 7,
+  "webcamModelAccuracyMeasured": false,
+  "notes": "Research preview. Numerical fixture and playback conformance establish software behavior, not human webcam accuracy."
+}

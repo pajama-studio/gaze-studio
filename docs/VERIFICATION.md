@@ -4,6 +4,12 @@ The application is a research preview, not a validated eye tracker. Checks below
 
 The initial production checks ran on **2026-09-06** against Cloudflare version `ff20ae31-e264-4257-ae1c-1baf6f5f4e7b`, before the move to [gaze.pajama.studio](https://gaze.pajama.studio). Published [machine-readable reports](verification/) retain their actual endpoint and time; CI artifacts capture subsequent runs separately.
 
+The custom-domain deployment `93648ec6-3823-4493-9bdf-7f0dd137ede2` passed the same **13 API checks and 11 browser flows**. Cloudflare and Google public DNS returned its new address; the local router retained an earlier NXDOMAIN answer, so these checks used a process-local mapping to the independently resolved address, with normal HTTPS certificate validation. [Domain API report](verification/domain-api-results.json) · [Domain browser report](verification/domain-browser-results.json) · [Domain and branding checks](verification/domain-ui.json).
+
+After the local DNS cache updated, a fresh Chromium browser using its default resolver also passed HTTPS navigation, the Pajama Studio title, native video loading and seeking. The successful default-resolver recheck is timestamped in the domain UI report.
+
+[GitHub CI](https://github.com/pajama-studio/gaze-studio/actions/runs/34067238558) passed on Ubuntu/Node 22: unit tests, application build, Worker type checking, local D1/R2 setup and API/browser tests. Current [screenshots](screenshots/) show the Pajama Studio deployment.
+
 ## Automated checks
 
 - **50 unit tests**: integer-nanosecond handling, offset/drift/inverse clocks, VFR indexing, missing/off-screen gaze, duplicate rejection, CSV quoting, package integrity and raw-source round trips, Cogix rectangle/ellipse conversion, recorded DOM geometry, I-VT/I-DT events, time-weighted dwell, gaps, participants, AOI visibility boundaries, independent label matching, angular geometry, bias versus jitter.
