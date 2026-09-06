@@ -1,0 +1,3 @@
+# Preserve the exact bytes of upstream notices, including their line endings.
+public/datasets/GazeMining-README.txt -text -whitespace
+public/fonts/*-OFL.txt -text -whitespace

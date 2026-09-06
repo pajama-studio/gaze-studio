@@ -1,0 +1,783 @@
+{
+  "base": "https://cogix-gaze-studio.radiantclay.workers.dev",
+  "time": "2026-09-06T23:24:11.795Z",
+  "singleFrameCandidates": 1,
+  "trackedCandidates": 6,
+  "domRegions": 14,
+  "inferenceRequests": 7,
+  "outputs": [
+    {
+      "status": 200,
+      "body": {
+        "id": "dd2f5ad4-80d1-48ea-8094-5955c20ca484",
+        "model": "@cf/facebook/detr-resnet-50",
+        "detections": [
+          {
+            "score": 0.9509261250495911,
+            "label": "cell phone",
+            "box": {
+              "xmin": 219,
+              "ymin": 418,
+              "xmax": 243,
+              "ymax": 454
+            }
+          },
+          {
+            "score": 0.43320509791374207,
+            "label": "cell phone",
+            "box": {
+              "xmin": 241,
+              "ymin": 410,
+              "xmax": 279,
+              "ymax": 445
+            }
+          },
+          {
+            "score": 0.3541882634162903,
+            "label": "cell phone",
+            "box": {
+              "xmin": 221,
+              "ymin": 406,
+              "xmax": 245,
+              "ymax": 431
+            }
+          },
+          {
+            "score": 0.3405752182006836,
+            "label": "cell phone",
+            "box": {
+              "xmin": 214,
+              "ymin": 419,
+              "xmax": 234,
+              "ymax": 454
+            }
+          },
+          {
+            "score": 0.2843398153781891,
+            "label": "cell phone",
+            "box": {
+              "xmin": 192,
+              "ymin": 407,
+              "xmax": 209,
+              "ymax": 454
+            }
+          },
+          {
+            "score": 0.2567070424556732,
+            "label": "cell phone",
+            "box": {
+              "xmin": 203,
+              "ymin": 419,
+              "xmax": 220,
+              "ymax": 455
+            }
+          },
+          {
+            "score": 0.20503106713294983,
+            "label": "cell phone",
+            "box": {
+              "xmin": 207,
+              "ymin": 418,
+              "xmax": 225,
+              "ymax": 454
+            }
+          },
+          {
+            "score": 0.19557000696659088,
+            "label": "cell phone",
+            "box": {
+              "xmin": 211,
+              "ymin": 403,
+              "xmax": 232,
+              "ymax": 425
+            }
+          },
+          {
+            "score": 0.1866215318441391,
+            "label": "cell phone",
+            "box": {
+              "xmin": 230,
+              "ymin": 415,
+              "xmax": 252,
+              "ymax": 443
+            }
+          },
+          {
+            "score": 0.17530521750450134,
+            "label": "cell phone",
+            "box": {
+              "xmin": 200,
+              "ymin": 392,
+              "xmax": 276,
+              "ymax": 433
+            }
+          },
+          {
+            "score": 0.15620553493499756,
+            "label": "cell phone",
+            "box": {
+              "xmin": 230,
+              "ymin": 419,
+              "xmax": 252,
+              "ymax": 452
+            }
+          },
+          {
+            "score": 0.13891716301441193,
+            "label": "cell phone",
+            "box": {
+              "xmin": 233,
+              "ymin": 400,
+              "xmax": 254,
+              "ymax": 419
+            }
+          },
+          {
+            "score": 0.12735410034656525,
+            "label": "cell phone",
+            "box": {
+              "xmin": 226,
+              "ymin": 420,
+              "xmax": 245,
+              "ymax": 453
+            }
+          },
+          {
+            "score": 0.11458973586559296,
+            "label": "cell phone",
+            "box": {
+              "xmin": 243,
+              "ymin": 402,
+              "xmax": 265,
+              "ymax": 422
+            }
+          }
+        ]
+      }
+    },
+    {
+      "status": 200,
+      "body": {
+        "id": "83c05b97-2828-4101-8f4a-1937fa9f3be1",
+        "model": "@cf/facebook/detr-resnet-50",
+        "detections": [
+          {
+            "score": 0.9509261250495911,
+            "label": "cell phone",
+            "box": {
+              "xmin": 219,
+              "ymin": 418,
+              "xmax": 243,
+              "ymax": 454
+            }
+          },
+          {
+            "score": 0.43320509791374207,
+            "label": "cell phone",
+            "box": {
+              "xmin": 241,
+              "ymin": 410,
+              "xmax": 279,
+              "ymax": 445
+            }
+          },
+          {
+            "score": 0.3541882634162903,
+            "label": "cell phone",
+            "box": {
+              "xmin": 221,
+              "ymin": 406,
+              "xmax": 245,
+              "ymax": 431
+            }
+          },
+          {
+            "score": 0.3405752182006836,
+            "label": "cell phone",
+            "box": {
+              "xmin": 214,
+              "ymin": 419,
+              "xmax": 234,
+              "ymax": 454
+            }
+          },
+          {
+            "score": 0.2843398153781891,
+            "label": "cell phone",
+            "box": {
+              "xmin": 192,
+              "ymin": 407,
+              "xmax": 209,
+              "ymax": 454
+            }
+          },
+          {
+            "score": 0.2567070424556732,
+            "label": "cell phone",
+            "box": {
+              "xmin": 203,
+              "ymin": 419,
+              "xmax": 220,
+              "ymax": 455
+            }
+          },
+          {
+            "score": 0.20503106713294983,
+            "label": "cell phone",
+            "box": {
+              "xmin": 207,
+              "ymin": 418,
+              "xmax": 225,
+              "ymax": 454
+            }
+          },
+          {
+            "score": 0.19557000696659088,
+            "label": "cell phone",
+            "box": {
+              "xmin": 211,
+              "ymin": 403,
+              "xmax": 232,
+              "ymax": 425
+            }
+          },
+          {
+            "score": 0.1866215318441391,
+            "label": "cell phone",
+            "box": {
+              "xmin": 230,
+              "ymin": 415,
+              "xmax": 252,
+              "ymax": 443
+            }
+          },
+          {
+            "score": 0.17530521750450134,
+            "label": "cell phone",
+            "box": {
+              "xmin": 200,
+              "ymin": 392,
+              "xmax": 276,
+              "ymax": 433
+            }
+          },
+          {
+            "score": 0.15620553493499756,
+            "label": "cell phone",
+            "box": {
+              "xmin": 230,
+              "ymin": 419,
+              "xmax": 252,
+              "ymax": 452
+            }
+          },
+          {
+            "score": 0.13891716301441193,
+            "label": "cell phone",
+            "box": {
+              "xmin": 233,
+              "ymin": 400,
+              "xmax": 254,
+              "ymax": 419
+            }
+          },
+          {
+            "score": 0.12735410034656525,
+            "label": "cell phone",
+            "box": {
+              "xmin": 226,
+              "ymin": 420,
+              "xmax": 245,
+              "ymax": 453
+            }
+          },
+          {
+            "score": 0.11458973586559296,
+            "label": "cell phone",
+            "box": {
+              "xmin": 243,
+              "ymin": 402,
+              "xmax": 265,
+              "ymax": 422
+            }
+          }
+        ]
+      }
+    },
+    {
+      "status": 200,
+      "body": {
+        "id": "5f277932-67ba-4fd0-8151-d2cfe4c44afd",
+        "model": "@cf/facebook/detr-resnet-50",
+        "detections": [
+          {
+            "score": 0.755767822265625,
+            "label": "handbag",
+            "box": {
+              "xmin": 402,
+              "ymin": 429,
+              "xmax": 493,
+              "ymax": 522
+            }
+          },
+          {
+            "score": 0.7038620710372925,
+            "label": "laptop",
+            "box": {
+              "xmin": 0,
+              "ymin": 2,
+              "xmax": 960,
+              "ymax": 712
+            }
+          }
+        ]
+      }
+    },
+    {
+      "status": 200,
+      "body": {
+        "id": "82d17ab5-8e69-407d-a03e-24e73b7753aa",
+        "model": "@cf/facebook/detr-resnet-50",
+        "detections": [
+          {
+            "score": 0.2883056402206421,
+            "label": "laptop",
+            "box": {
+              "xmin": 5,
+              "ymin": 73,
+              "xmax": 408,
+              "ymax": 715
+            }
+          }
+        ]
+      }
+    },
+    {
+      "status": 200,
+      "body": {
+        "id": "922cc995-75a2-4c29-9da5-cfb574770ed5",
+        "model": "@cf/facebook/detr-resnet-50",
+        "detections": [
+          {
+            "score": 0.2532896101474762,
+            "label": "book",
+            "box": {
+              "xmin": 3,
+              "ymin": 41,
+              "xmax": 407,
+              "ymax": 714
+            }
+          },
+          {
+            "score": 0.11012919992208481,
+            "label": "laptop",
+            "box": {
+              "xmin": 0,
+              "ymin": 2,
+              "xmax": 960,
+              "ymax": 712
+            }
+          }
+        ]
+      }
+    },
+    {
+      "status": 200,
+      "body": {
+        "id": "fd3f3bbf-3f98-42a5-952c-b673114689d8",
+        "model": "@cf/facebook/detr-resnet-50",
+        "detections": [
+          {
+            "score": 0.951796293258667,
+            "label": "cell phone",
+            "box": {
+              "xmin": 219,
+              "ymin": 419,
+              "xmax": 244,
+              "ymax": 454
+            }
+          },
+          {
+            "score": 0.4402429461479187,
+            "label": "cell phone",
+            "box": {
+              "xmin": 244,
+              "ymin": 412,
+              "xmax": 278,
+              "ymax": 445
+            }
+          },
+          {
+            "score": 0.3083779215812683,
+            "label": "cell phone",
+            "box": {
+              "xmin": 217,
+              "ymin": 420,
+              "xmax": 239,
+              "ymax": 454
+            }
+          },
+          {
+            "score": 0.30054590106010437,
+            "label": "cell phone",
+            "box": {
+              "xmin": 202,
+              "ymin": 393,
+              "xmax": 276,
+              "ymax": 428
+            }
+          },
+          {
+            "score": 0.28779518604278564,
+            "label": "cell phone",
+            "box": {
+              "xmin": 224,
+              "ymin": 407,
+              "xmax": 249,
+              "ymax": 431
+            }
+          },
+          {
+            "score": 0.28307339549064636,
+            "label": "cell phone",
+            "box": {
+              "xmin": 194,
+              "ymin": 409,
+              "xmax": 211,
+              "ymax": 453
+            }
+          },
+          {
+            "score": 0.26034975051879883,
+            "label": "cell phone",
+            "box": {
+              "xmin": 205,
+              "ymin": 420,
+              "xmax": 224,
+              "ymax": 455
+            }
+          },
+          {
+            "score": 0.2593861520290375,
+            "label": "clock",
+            "box": {
+              "xmin": 781,
+              "ymin": 244,
+              "xmax": 811,
+              "ymax": 265
+            }
+          },
+          {
+            "score": 0.23888196051120758,
+            "label": "cell phone",
+            "box": {
+              "xmin": 214,
+              "ymin": 402,
+              "xmax": 239,
+              "ymax": 424
+            }
+          },
+          {
+            "score": 0.21497659385204315,
+            "label": "cell phone",
+            "box": {
+              "xmin": 238,
+              "ymin": 415,
+              "xmax": 270,
+              "ymax": 448
+            }
+          },
+          {
+            "score": 0.1600877195596695,
+            "label": "cell phone",
+            "box": {
+              "xmin": 194,
+              "ymin": 410,
+              "xmax": 210,
+              "ymax": 456
+            }
+          },
+          {
+            "score": 0.15938134491443634,
+            "label": "cell phone",
+            "box": {
+              "xmin": 239,
+              "ymin": 397,
+              "xmax": 263,
+              "ymax": 417
+            }
+          },
+          {
+            "score": 0.1510343849658966,
+            "label": "cell phone",
+            "box": {
+              "xmin": 210,
+              "ymin": 419,
+              "xmax": 229,
+              "ymax": 455
+            }
+          },
+          {
+            "score": 0.14598095417022705,
+            "label": "cell phone",
+            "box": {
+              "xmin": 246,
+              "ymin": 400,
+              "xmax": 272,
+              "ymax": 421
+            }
+          },
+          {
+            "score": 0.1436394900083542,
+            "label": "cell phone",
+            "box": {
+              "xmin": 251,
+              "ymin": 407,
+              "xmax": 279,
+              "ymax": 432
+            }
+          },
+          {
+            "score": 0.13681666553020477,
+            "label": "cell phone",
+            "box": {
+              "xmin": 201,
+              "ymin": 402,
+              "xmax": 228,
+              "ymax": 433
+            }
+          },
+          {
+            "score": 0.12687687575817108,
+            "label": "cell phone",
+            "box": {
+              "xmin": 204,
+              "ymin": 407,
+              "xmax": 230,
+              "ymax": 456
+            }
+          },
+          {
+            "score": 0.11587704718112946,
+            "label": "cell phone",
+            "box": {
+              "xmin": 192,
+              "ymin": 392,
+              "xmax": 274,
+              "ymax": 457
+            }
+          }
+        ]
+      }
+    },
+    {
+      "status": 200,
+      "body": {
+        "id": "0914342c-4f50-49eb-935c-754355e3382a",
+        "model": "@cf/facebook/detr-resnet-50",
+        "detections": [
+          {
+            "score": 0.886876106262207,
+            "label": "cell phone",
+            "box": {
+              "xmin": 220,
+              "ymin": 362,
+              "xmax": 244,
+              "ymax": 396
+            }
+          },
+          {
+            "score": 0.8288636207580566,
+            "label": "cell phone",
+            "box": {
+              "xmin": 215,
+              "ymin": 362,
+              "xmax": 238,
+              "ymax": 397
+            }
+          },
+          {
+            "score": 0.4621705114841461,
+            "label": "cell phone",
+            "box": {
+              "xmin": 85,
+              "ymin": 481,
+              "xmax": 135,
+              "ymax": 522
+            }
+          },
+          {
+            "score": 0.46007832884788513,
+            "label": "cell phone",
+            "box": {
+              "xmin": 240,
+              "ymin": 354,
+              "xmax": 278,
+              "ymax": 388
+            }
+          },
+          {
+            "score": 0.40738368034362793,
+            "label": "cell phone",
+            "box": {
+              "xmin": 221,
+              "ymin": 349,
+              "xmax": 247,
+              "ymax": 372
+            }
+          },
+          {
+            "score": 0.2887626588344574,
+            "label": "cell phone",
+            "box": {
+              "xmin": 204,
+              "ymin": 363,
+              "xmax": 221,
+              "ymax": 397
+            }
+          },
+          {
+            "score": 0.275679349899292,
+            "label": "cell phone",
+            "box": {
+              "xmin": 192,
+              "ymin": 352,
+              "xmax": 211,
+              "ymax": 398
+            }
+          },
+          {
+            "score": 0.2698880136013031,
+            "label": "cell phone",
+            "box": {
+              "xmin": 211,
+              "ymin": 345,
+              "xmax": 235,
+              "ymax": 366
+            }
+          },
+          {
+            "score": 0.21481265127658844,
+            "label": "cell phone",
+            "box": {
+              "xmin": 237,
+              "ymin": 340,
+              "xmax": 265,
+              "ymax": 359
+            }
+          },
+          {
+            "score": 0.18899357318878174,
+            "label": "cell phone",
+            "box": {
+              "xmin": 202,
+              "ymin": 353,
+              "xmax": 224,
+              "ymax": 397
+            }
+          },
+          {
+            "score": 0.16609296202659607,
+            "label": "cell phone",
+            "box": {
+              "xmin": 233,
+              "ymin": 362,
+              "xmax": 252,
+              "ymax": 394
+            }
+          },
+          {
+            "score": 0.1656516194343567,
+            "label": "cell phone",
+            "box": {
+              "xmin": 243,
+              "ymin": 344,
+              "xmax": 268,
+              "ymax": 364
+            }
+          },
+          {
+            "score": 0.15980412065982819,
+            "label": "cell phone",
+            "box": {
+              "xmin": 230,
+              "ymin": 361,
+              "xmax": 251,
+              "ymax": 392
+            }
+          },
+          {
+            "score": 0.13505876064300537,
+            "label": "cell phone",
+            "box": {
+              "xmin": 194,
+              "ymin": 361,
+              "xmax": 210,
+              "ymax": 398
+            }
+          },
+          {
+            "score": 0.1321520060300827,
+            "label": "cell phone",
+            "box": {
+              "xmin": 197,
+              "ymin": 334,
+              "xmax": 277,
+              "ymax": 371
+            }
+          },
+          {
+            "score": 0.12378446012735367,
+            "label": "cell phone",
+            "box": {
+              "xmin": 208,
+              "ymin": 361,
+              "xmax": 226,
+              "ymax": 397
+            }
+          },
+          {
+            "score": 0.11672665178775787,
+            "label": "cell phone",
+            "box": {
+              "xmin": 196,
+              "ymin": 347,
+              "xmax": 219,
+              "ymax": 386
+            }
+          },
+          {
+            "score": 0.10773954540491104,
+            "label": "cell phone",
+            "box": {
+              "xmin": 191,
+              "ymin": 339,
+              "xmax": 266,
+              "ymax": 400
+            }
+          },
+          {
+            "score": 0.10770577192306519,
+            "label": "cell phone",
+            "box": {
+              "xmin": 194,
+              "ymin": 346,
+              "xmax": 219,
+              "ymax": 399
+            }
+          },
+          {
+            "score": 0.10286909341812134,
+            "label": "cell phone",
+            "box": {
+              "xmin": 237,
+              "ymin": 347,
+              "xmax": 267,
+              "ymax": 379
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

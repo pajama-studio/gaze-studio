@@ -1,0 +1,19 @@
+{
+  "base": "https://cogix-gaze-studio.radiantclay.workers.dev",
+  "checkedAt": "2026-09-06T23:23:07.529Z",
+  "passed": [
+    "cross-origin mutation rejection",
+    "unauthenticated catalog rejection",
+    "cross-workspace object isolation",
+    "streamed R2 object upload",
+    "HTTP 206 byte-range correctness",
+    "suffix ranges",
+    "unsatisfiable range rejection",
+    "unsupported multipart-range rejection",
+    "ETag validation",
+    "HEAD and safe content headers",
+    "immutable saved revisions",
+    "raw source retention",
+    "recording and object deletion"
+  ]
+}

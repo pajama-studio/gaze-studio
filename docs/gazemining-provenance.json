@@ -1,0 +1,32 @@
+{
+  "dataset": "https://zenodo.org/records/5031618",
+  "version": "1.0.2",
+  "retrieved": "2026-09-06",
+  "rawSamples": 7013,
+  "canonicalSamples": 6718,
+  "duplicatesMerged": 295,
+  "decodedFrames": 382,
+  "maxFrameTimeDisagreementUs": 0,
+  "files": {
+    "amazon.webm": {
+      "sha256": "06f802080a60cee0a8196ed27f2456813c15d1101ceb2f9782bf97882e8672fe",
+      "bytes": 3259380
+    },
+    "amazon.json": {
+      "sha256": "ea918f84c462d03b378cc627b05ecf9f98decba35c75a43d813a360111612900",
+      "bytes": 7719886
+    },
+    "amazon_times.csv": {
+      "sha256": "5f86457b149246a90182bed68122a8bc2d2d1971a49e449af5cd7e4d5b811a7d",
+      "bytes": 3772
+    },
+    "README.txt": {
+      "sha256": "cdfd03c835a35101f156a72bbfbc888c7962aa95c3fd5b7b37795080b336cb7c",
+      "bytes": 4142
+    },
+    "gazemining.json": {
+      "sha256": "d776d9762be45e83ddab885b5aca8d1e150600e721115c3fdcaa5b8748674929",
+      "bytes": 620476
+    }
+  }
+}

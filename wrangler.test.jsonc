@@ -1,0 +1,25 @@
+{
+  "name": "gaze-studio-test",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-06",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"],
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "gaze-studio",
+      "database_id": "local-test-only",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "r2_buckets": [{ "binding": "DATA", "bucket_name": "gaze-studio-test" }],
+  "vars": {
+    "CLOUD_ENABLED": "true",
+    "MAX_OBJECT_BYTES": "104857600",
+    "AI_DAILY_LIMIT": "100",
+  },
+}

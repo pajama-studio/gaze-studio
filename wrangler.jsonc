@@ -1,0 +1,28 @@
+{
+  "name": "cogix-gaze-studio",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-06",
+  "routes": [{ "pattern": "gaze.pajama.studio", "custom_domain": true }],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"],
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "gaze-studio",
+      "database_id": "0b3e28ea-bd6c-4b4a-accb-33f01cec3a56",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "r2_buckets": [{ "binding": "DATA", "bucket_name": "cogix-gaze-studio" }],
+  "ai": { "binding": "AI" },
+  "vars": {
+    "CLOUD_ENABLED": "true",
+    "MAX_OBJECT_BYTES": "104857600",
+    "AI_DAILY_LIMIT": "100",
+  },
+  "observability": { "enabled": true },
+}

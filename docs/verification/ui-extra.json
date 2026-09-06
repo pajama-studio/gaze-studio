@@ -1,0 +1,9 @@
+{
+  "base": "https://cogix-gaze-studio.radiantclay.workers.dev",
+  "checkedAt": "2026-09-06T23:25:05.308Z",
+  "passed": [
+    "independent CSV benchmark UI (known 10px error)",
+    "synchronization anchor editor",
+    "mobile workspace navigation"
+  ]
+}

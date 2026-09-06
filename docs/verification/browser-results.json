@@ -1,0 +1,18 @@
+{
+  "base": "https://cogix-gaze-studio.radiantclay.workers.dev",
+  "checkedAt": "2026-09-06T23:23:16.525Z",
+  "passed": [
+    "real dataset and analysis worker",
+    "native video playback and seek",
+    "manual rectangle annotation",
+    "dynamic AOI keyframe and undo",
+    "polygon annotation",
+    "independent analysis and exports",
+    "portable package round trip with original raw data",
+    "Cloudflare R2 upload and cloud catalog",
+    "cloud data cleanup",
+    "dataset discovery filter",
+    "mobile layout and import"
+  ],
+  "errors": []
+}

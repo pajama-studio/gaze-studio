@@ -1,0 +1,45 @@
+{
+  "version": "gaze-studio-benchmark/0.1.0",
+  "predictions": 11,
+  "references": 11,
+  "matched": 11,
+  "predictionMatchRate": 1,
+  "referenceCoverage": 1,
+  "pixelError": {
+    "mean": 10,
+    "median": 10,
+    "p90": 10,
+    "rmse": 10
+  },
+  "angularError": null,
+  "matchingErrorUs": {
+    "mean": 0,
+    "median": 0,
+    "p90": 0,
+    "rmse": 0
+  },
+  "staticTargetPrecision": {
+    "rmsSampleToSamplePx": 0,
+    "pooledWithinTargetSDPx": 0,
+    "pairCount": 10,
+    "groups": 1,
+    "rule": "Exact constant-reference runs, at least 5 matched samples and 100 ms, no gap over 75 ms. Includes settling and drift; define a fixation-only protocol for controlled precision."
+  },
+  "perParticipant": {
+    "P01": {
+      "mean": 10,
+      "median": 10,
+      "p90": 10,
+      "rmse": 10
+    }
+  },
+  "macroMeanPx": 10,
+  "toleranceUs": 8000,
+  "geometry": null,
+  "interpretation": "Offline error against supplied reference labels. This does not establish real-world webcam accuracy; hold out participants and calibration targets.",
+  "protocol": "Deterministic scorer conformance test: constant 10px bias, zero jitter; not human or webcam-model measurements.",
+  "dimensions": {
+    "width": 1024,
+    "height": 768
+  }
+}
