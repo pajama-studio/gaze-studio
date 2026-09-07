@@ -1,0 +1,39 @@
+{
+  "base": "https://gaze.pajama.studio",
+  "time": "2026-09-07T00:59:09.984Z",
+  "results": [
+    {
+      "title": "Through both eyes",
+      "tracks": [
+        {
+          "role": "right-eye",
+          "anchors": 1,
+          "frames": 2367
+        },
+        {
+          "role": "left-eye",
+          "anchors": 1,
+          "frames": 2390
+        }
+      ],
+      "signals": 4757
+    },
+    {
+      "title": "HARMONIC · through the glasses",
+      "tracks": [
+        {
+          "role": "right-eye",
+          "anchors": 2231,
+          "frames": 2231
+        },
+        {
+          "role": "left-eye",
+          "anchors": 2266,
+          "frames": 2266
+        }
+      ],
+      "signals": 4490
+    }
+  ],
+  "errors": []
+}

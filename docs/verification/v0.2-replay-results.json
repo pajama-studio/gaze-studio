@@ -1,0 +1,17 @@
+{
+  "base": "https://gaze.pajama.studio",
+  "checkedAt": "2026-09-07T01:00:56.358Z",
+  "passed": [
+    "real source automatic annotations remain reviewable",
+    "accepted automatic AOIs drive scoped analysis",
+    "analysis evidence opens the aligned video at the first fixation",
+    "portable replay restores the protocol and identical AOI results",
+    "public dataset opens a fresh replay with automatic region proposals",
+    "uploaded video and gaze use sampled AI proposals before analysis",
+    "mobile replay workflow stays within the viewport"
+  ],
+  "errors": [],
+  "realDatasetRegions": 14,
+  "uploadedVideoDetector": "Mocked fixed-box responses test workflow and frame extraction, not model quality",
+  "uploadedVideoFrameRequests": 6
+}

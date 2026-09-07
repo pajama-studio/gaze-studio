@@ -1,0 +1,54 @@
+{
+  "base": "https://gaze.pajama.studio",
+  "time": "2026-09-07T00:34:21.358Z",
+  "requests": 6,
+  "model": "@cf/facebook/detr-resnet-50",
+  "areas": 11,
+  "dwellUs": [
+    {
+      "name": "person",
+      "dwell": 1977656
+    },
+    {
+      "name": "person",
+      "dwell": 1998607
+    },
+    {
+      "name": "person",
+      "dwell": 640185
+    },
+    {
+      "name": "person",
+      "dwell": 2255219
+    },
+    {
+      "name": "cell phone",
+      "dwell": 0
+    },
+    {
+      "name": "handbag",
+      "dwell": 0
+    },
+    {
+      "name": "umbrella",
+      "dwell": 0
+    },
+    {
+      "name": "person",
+      "dwell": 1292678
+    },
+    {
+      "name": "backpack",
+      "dwell": 0
+    },
+    {
+      "name": "umbrella",
+      "dwell": 0
+    },
+    {
+      "name": "bench",
+      "dwell": 335792
+    }
+  ],
+  "version": "gaze-studio-rust/0.2.0"
+}

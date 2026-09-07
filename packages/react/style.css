@@ -451,6 +451,7 @@
   border-radius: 50%;
 }
 .gaze-player .timeline-scroll {
+  container: gaze-timeline / inline-size;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scrollbar-width: thin;
@@ -494,6 +495,11 @@
 }
 .gaze-player .timeline-ruler > div > span:last-child {
   transform: translateX(-100%);
+}
+@container gaze-timeline (max-width: 420px) {
+  .gaze-player .timeline-ruler > div > span:nth-child(even) {
+    display: none;
+  }
 }
 .gaze-player .timeline-tracks {
   position: relative;

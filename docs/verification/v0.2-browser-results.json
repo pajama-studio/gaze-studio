@@ -1,0 +1,18 @@
+{
+  "base": "https://gaze.pajama.studio",
+  "checkedAt": "2026-09-07T01:01:07.280Z",
+  "passed": [
+    "real dataset and analysis worker",
+    "native video playback and seek",
+    "manual rectangle annotation",
+    "dynamic AOI keyframe and undo",
+    "polygon annotation",
+    "independent analysis and exports",
+    "portable package round trip with original raw data",
+    "Cloudflare R2 upload and cloud catalog",
+    "cloud data cleanup",
+    "dataset discovery filter",
+    "mobile layout and import"
+  ],
+  "errors": []
+}

@@ -1,0 +1,14 @@
+{
+  "base": "https://gaze.pajama.studio",
+  "time": "2026-09-07T00:58:25.365Z",
+  "results": [
+    "real left eye, right eye and scene decode from owned Cloudflare assets",
+    "seeking, true frame stepping and two playback speeds keep eye videos synchronized",
+    "pupil trace seeks all three camera streams",
+    "portable package preserves both actual eye movies, frame clocks and derived signals offline",
+    "R2/D1 catalog exposes checksums and rejects private raw asset reads",
+    "standalone reusable replay works independently of Studio",
+    "binocular replay fits a mobile viewport"
+  ],
+  "errors": []
+}

@@ -38,3 +38,10 @@ The native sample video is served through a **public allowlisted R2 route** (`/a
 - TB-scale out-of-core processing, durable background jobs, multi-user team authorization or large-load/cost benchmarks.
 
 See [METHODS.md](METHODS.md), [FORMAT.md](FORMAT.md) and [the roadmap](PLAN.zh-CN.md) for definitions and limits.
+
+
+## v0.2 editor and raw eye videos
+
+The deployed graphite editor and real binocular sample are verified separately in [EDITOR-VERIFICATION.md](EDITOR-VERIFICATION.md). The actual Cloudflare domain passed editor, binocular, API and three-video cloud round trips; preserved [deployment metadata](verification/v0.2-deployment.json), [editor checks](verification/v0.2-editor-results.json), [binocular checks](verification/v0.2-binocular-results.json), [both real cloud trials](verification/v0.2-raw-cloud-results.json), [real DETR run](verification/v0.2-real-detr.json), and [performance measurement](verification/v0.2-playback-performance.json) document the evidence and limits.
+
+[The v0.2 CI run](https://github.com/pajama-studio/gaze-studio/actions/runs/34071511158) passed for source `878391c6b1dd3b8e7b829fba68a8cdc3897d610b`: 69 TypeScript/WASM tests, 3 native Rust tests, build/type checks, 13 API checks and all 32 browser flows. The final production rerun also passed the [11 general browser flows](verification/v0.2-browser-results.json) and [7 replay workflows](verification/v0.2-replay-results.json).

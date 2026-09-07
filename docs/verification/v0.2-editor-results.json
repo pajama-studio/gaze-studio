@@ -1,0 +1,14 @@
+{
+  "base": "https://gaze.pajama.studio",
+  "time": "2026-09-07T00:58:18.856Z",
+  "results": [
+    "left and right cameras appear side by side in anatomical label order",
+    "timeline supports pointer scrubbing and zoom without changing scene coordinates",
+    "keyboard playback, frame stepping and editing shortcuts preserve input focus",
+    "eye view rotation and collapse are display controls",
+    "three-participant fixture uses parallel Rust workers",
+    "per-eye Rust descriptive statistics are available in analysis",
+    "mobile editor keeps cameras side by side and all controls within the viewport"
+  ],
+  "errors": []
+}

@@ -1,0 +1,27 @@
+{
+  "url": "https://gaze.pajama.studio",
+  "workerVersion": "d59ed829-919c-4790-81d1-735d6bd9b680",
+  "sourceCommit": "878391c6b1dd3b8e7b829fba68a8cdc3897d610b",
+  "time": "2026-09-07T01:00:47.913458+00:00",
+  "unitTests": 69,
+  "nativeRustTests": 3,
+  "publicEditorChecks": 7,
+  "publicBinocularChecks": 7,
+  "publicApiChecks": 13,
+  "rawCloudTrials": [
+    "Through the Eyes of Emotion P01/0a",
+    "HARMONIC P122/011"
+  ],
+  "publicBrowserFlows": 11,
+  "publicReplayFlows": 7,
+  "ci": {
+    "url": "https://github.com/pajama-studio/gaze-studio/actions/runs/34071511158",
+    "conclusion": "success"
+  },
+  "cloudLibrary": {
+    "datasets": 5,
+    "objectsAtVerification": 93,
+    "bytesAtVerification": 954654084,
+    "scope": "Obtained source trials and derived/verification assets; not entire source collections."
+  }
+}

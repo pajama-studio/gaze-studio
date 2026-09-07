@@ -2,6 +2,8 @@
 
 The v0.2 editor adds a real binocular replay, reusable controls, Rust/WASM analysis and an owned Cloudflare dataset library. Verification is separated by what it establishes.
 
+The deployed source is `878391c6b1dd3b8e7b829fba68a8cdc3897d610b`; [its CI run passed](https://github.com/pajama-studio/gaze-studio/actions/runs/34071511158). Published reports retain their actual test endpoint and timestamp.
+
 - **69 TypeScript/WASM tests**: existing methods and formats plus saved AOI scope, actual compiled Rust differential comparisons, camera-stream package round trips and external playback-clock behavior.
 - **3 native Rust tests**: clock drift, invalid analysis input and confidence-filtered pupil statistics with mixed-unit rejection.
 - **11 general browser flows**: real GazeMining playback, drawing, keyframes/undo, exports, portable raw sources, cloud revisions and mobile import.

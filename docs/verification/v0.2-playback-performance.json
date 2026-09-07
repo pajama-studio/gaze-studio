@@ -1,0 +1,54 @@
+{
+  "time": "2026-09-07T00:47:31.053Z",
+  "results": [
+    {
+      "url": "https://gaze.pajama.studio",
+      "cpuThrottle": 4,
+      "seconds": 5,
+      "scriptMs": 725.0060000000001,
+      "taskMs": 1555.558,
+      "layoutMs": 208.041,
+      "rafP95Ms": 18,
+      "longTasks": [],
+      "videos": [
+        {
+          "decoded": 221,
+          "dropped": 1
+        },
+        {
+          "decoded": 930,
+          "dropped": 300
+        },
+        {
+          "decoded": 929,
+          "dropped": 305
+        }
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:8798",
+      "cpuThrottle": 4,
+      "seconds": 5,
+      "scriptMs": 362.267,
+      "taskMs": 1341.665,
+      "layoutMs": 216.185,
+      "rafP95Ms": 19.59999990463257,
+      "longTasks": [],
+      "videos": [
+        {
+          "decoded": 221,
+          "dropped": 1
+        },
+        {
+          "decoded": 970,
+          "dropped": 307
+        },
+        {
+          "decoded": 1166,
+          "dropped": 302
+        }
+      ]
+    }
+  ],
+  "note": "Same host, Chromium, 4x CPU throttle, 5 s playback after media ready. No universal FPS or device-speed claim."
+}
