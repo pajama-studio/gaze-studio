@@ -7,7 +7,10 @@ const context = await browser.newContext({
   viewport: { width: 1440, height: 1000 },
   acceptDownloads: true,
 });
-await context.addInitScript(()=>{if(!localStorage.getItem("gaze-studio-active"))localStorage.setItem("gaze-studio-active","gazemining-p1-amazon");});
+await context.addInitScript(() => {
+  if (!localStorage.getItem("gaze-studio-active"))
+    localStorage.setItem("gaze-studio-active", "gazemining-p1-amazon");
+});
 const page = await context.newPage(),
   errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
@@ -140,7 +143,7 @@ try {
   );
   await check("Cloudflare R2 upload and cloud catalog", async () => {
     await page.getByRole("button", { name: "Save to cloud" }).click();
-    await expect(page.getByRole("status")).toContainText(
+    await expect(page.locator('.toast[role="status"]')).toContainText(
       "Saved to your private cloud workspace",
       { timeout: 60000 },
     );
@@ -187,7 +190,9 @@ try {
       isMobile: true,
       hasTouch: true,
     });
-    await mobile.addInitScript(()=>localStorage.setItem("gaze-studio-active","gazemining-p1-amazon"));
+    await mobile.addInitScript(() =>
+      localStorage.setItem("gaze-studio-active", "gazemining-p1-amazon"),
+    );
     const p = await mobile.newPage();
     await p.goto(base);
     await expect(

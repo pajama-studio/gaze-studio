@@ -54,7 +54,9 @@ try {
   await check("accepted automatic AOIs drive scoped analysis", async () => {
     await page.getByRole("button", { name: "Accept & analyze" }).click();
     await expect(page.getByLabel("AOI set")).toHaveValue("automatic");
-    await expect(page.locator("tbody tr")).toHaveCount(14);
+    await expect(
+      page.getByRole("table", { name: "AOI metrics" }).locator("tbody tr"),
+    ).toHaveCount(14);
     original = await report("replay-analysis");
     expect(original.result.aoi.some((a) => a.name.includes("viewport"))).toBe(
       false,
@@ -112,7 +114,9 @@ try {
         .setInputFiles("artifacts/verification/replay.gaze.zip");
       await expect(page.getByRole("dialog")).toHaveCount(0);
       await page.getByRole("button", { name: "Analysis", exact: true }).click();
-      await expect(page.locator("tbody tr")).toHaveCount(14);
+      await expect(
+        page.getByRole("table", { name: "AOI metrics" }).locator("tbody tr"),
+      ).toHaveCount(14);
       const restored = await report("replay-restored-analysis");
       expect(restored.result).toEqual(original.result);
       await page.getByRole("button", { name: "Replay", exact: true }).click();
@@ -142,7 +146,9 @@ try {
       ).toBeVisible();
       await expect(page.locator(".aoi-item")).toHaveCount(14);
       await page.getByRole("button", { name: "Accept & analyze" }).click();
-      await expect(page.locator("tbody tr")).toHaveCount(14);
+      await expect(
+        page.getByRole("table", { name: "AOI metrics" }).locator("tbody tr"),
+      ).toHaveCount(14);
       await page.getByLabel("Event detector").selectOption("idt");
       await expect(page.locator(".metric").nth(1)).toContainText("IDT");
       await page.reload();
@@ -209,7 +215,12 @@ try {
       });
       expect(detections).toBe(6);
       await page.getByRole("button", { name: "Accept & analyze" }).click();
-      await expect(page.locator("tbody tr").first()).toBeVisible();
+      await expect(
+        page
+          .getByRole("table", { name: "AOI metrics" })
+          .locator("tbody tr")
+          .first(),
+      ).toBeVisible();
       const uploaded = await report("uploaded-ai-workflow");
       expect(uploaded.aois.length).toBeGreaterThanOrEqual(1);
       expect(uploaded.aois.reduce((n, a) => n + a.keyframes.length, 0)).toBe(6);
@@ -244,7 +255,9 @@ try {
       mobile.getByRole("button", { name: "Accept & analyze" }),
     ).toBeVisible();
     await mobile.getByRole("button", { name: "Accept & analyze" }).click();
-    await expect(mobile.locator("tbody tr")).toHaveCount(14);
+    await expect(
+      mobile.getByRole("table", { name: "AOI metrics" }).locator("tbody tr"),
+    ).toHaveCount(14);
     expect(
       await mobile.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,

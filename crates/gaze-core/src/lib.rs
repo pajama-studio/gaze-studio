@@ -27,7 +27,7 @@ pub fn merge_json(input: &str) -> Result<String, JsValue> {
 }
 #[wasm_bindgen]
 pub fn engine_version() -> String {
-    "gaze-core/0.2.0 rust-wasm".into()
+    "gaze-core/0.2.1 rust-wasm".into()
 }
 #[cfg(test)]
 mod tests {

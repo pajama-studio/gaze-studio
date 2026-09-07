@@ -11,7 +11,13 @@ import {
   Maximize2,
   ChevronDown,
 } from "lucide-react";
-import type { AOI, Analysis, Point, Recording } from "@pajama-studio/gaze-core";
+import type {
+  AOI,
+  Analysis,
+  Point,
+  Recording,
+  VideoTrack,
+} from "@pajama-studio/gaze-core";
 import { PALETTE } from "@pajama-studio/gaze-core";
 import { addKeyframe, pointsAt } from "@pajama-studio/gaze-core/aoi";
 import { frameAt, mapTime, sampleWindow } from "@pajama-studio/gaze-core/time";
@@ -33,6 +39,7 @@ export interface GazeReplayProps {
   onAOIs: (aois: AOI[]) => void;
   analysis: Analysis | null;
   videoRef: React.RefObject<HTMLVideoElement | null>;
+  onVideoTracks?: (tracks: VideoTrack[]) => void;
 }
 export function GazeReplay({
   recording: r,
@@ -46,6 +53,7 @@ export function GazeReplay({
   onAOIs,
   analysis,
   videoRef,
+  onVideoTracks,
 }: GazeReplayProps) {
   const svg = useRef<SVGSVGElement>(null);
   const monitor = useRef<HTMLDivElement>(null);
@@ -539,7 +547,7 @@ export function GazeReplay({
               />
               EYE CAMERAS
             </span>
-            <small>Original orientation · synchronized</small>
+            <small>View rotation · synchronized</small>
           </button>
           {showEyes && (
             <div className="eye-monitor-content">
@@ -548,6 +556,16 @@ export function GazeReplay({
                 time={time}
                 playing={playing}
                 speed={speed}
+                onRotationChange={
+                  onVideoTracks
+                    ? (id, angle) =>
+                        onVideoTracks(
+                          r.videoTracks!.map((t) =>
+                            t.id === id ? { ...t, viewRotation: angle } : t,
+                          ),
+                        )
+                    : undefined
+                }
               />
               {!!r.eyeSignals?.length && (
                 <EyeSignalTimeline

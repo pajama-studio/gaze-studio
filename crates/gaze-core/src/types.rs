@@ -80,6 +80,19 @@ pub struct Fixation {
 }
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
+pub struct Saccade {
+    pub start: f64,
+    pub end: f64,
+    pub start_x: f64,
+    pub start_y: f64,
+    pub end_x: f64,
+    pub end_y: f64,
+    pub amplitude: f64,
+    pub peak_velocity: f64,
+    pub participant: String,
+}
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Metric {
     pub id: String,
     pub name: String,
@@ -123,6 +136,8 @@ pub struct Analysis {
     pub median_hz: f64,
     pub gaps: usize,
     pub fixations: Vec<Fixation>,
+    #[serde(default)]
+    pub saccades: Vec<Saccade>,
     pub aoi: Vec<Metric>,
     pub transitions: Vec<Transition>,
     pub sequences: Vec<Sequence>,

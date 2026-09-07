@@ -19,7 +19,8 @@
     "test:replay": "node scripts/verify-replay.mjs",
     "build:ui": "tsc --noEmit && vite build",
     "test:binocular": "node scripts/verify-binocular.mjs",
-    "test:editor": "node scripts/verify-editor.mjs"
+    "test:editor": "node scripts/verify-editor.mjs",
+    "test:signals": "node scripts/verify-signal-tracks.mjs"
   },
   "dependencies": {
     "fflate": "0.8.3",

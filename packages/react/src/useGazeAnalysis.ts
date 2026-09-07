@@ -30,7 +30,15 @@ export function useGazeAnalysis(recording: Recording, settings: Settings) {
       clearTimeout(timer);
       controller.abort();
     };
-  }, [recording, settings]);
+  }, [
+    recording.id,
+    recording.samples,
+    recording.aois,
+    recording.anchors,
+    recording.duration,
+    recording.eyeSignals,
+    settings,
+  ]);
   return {
     result: run?.result ?? null,
     execution: run?.execution ?? null,

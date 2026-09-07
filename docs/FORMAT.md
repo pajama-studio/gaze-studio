@@ -172,3 +172,7 @@ The exporter now writes `0.2.0`; the reader accepts `0.1.0` and `0.2.0`. This is
 `recording.analysisSettings` preserves finite analysis windows, method, thresholds, participant and `aoiScope` (`all` or `automatic`). Only reviewed areas enter metrics. Portable export caps combined embedded data at 128 MiB; it does not silently omit an eye movie. Larger original archives live in R2 with an inventory.
 
 IndexedDB refreshes object URLs for all embedded media on reload. Private cloud revisions upload auxiliary videos as `track-0` through `track-5`, then load them through the same authenticated range-serving API as the scene video.
+
+### Camera presentation rotation
+
+An auxiliary video track can set optional `viewRotation` to `0`, `90`, `180` or `270` clockwise degrees. Omission means zero. It is presentation metadata: source video bytes, frame clocks and scene gaze coordinates remain unchanged. Local and cloud revisions and Gaze Package export/import preserve it. The viewer can temporarily show the original orientation without changing the saved correction.

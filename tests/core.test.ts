@@ -19,7 +19,7 @@ import {
   importARFF,
   exportBIDS,
 } from "../src/core/io";
-import { fixture } from "../src/core/fixture";
+import { fixture } from "./fixtures/recording";
 import {
   DEFAULT_SETTINGS,
   type AOI,

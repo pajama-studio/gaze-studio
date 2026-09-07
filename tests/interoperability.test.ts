@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { importCogixAOIs, importPackage, exportPackage } from "../src/core/io";
 import { gazeMiningLayers } from "../src/core/dom";
-import { fixture } from "../src/core/fixture";
+import { fixture } from "./fixtures/recording";
 import { benchmark } from "../src/core/benchmark";
 import type { Gaze } from "../src/core/types";
 import { unzipSync, zipSync, strFromU8, strToU8 } from "fflate";

@@ -10,6 +10,7 @@ An open source workspace for aligned video and gaze replay, dynamic areas of int
 
 ## What works
 
+- Inspect five synchronized data tracks: gaze X/Y, fixations, saccade candidates, left/right pupil diameter and tracking quality. Select events to inspect duration/amplitude/peak speed, seek all videos, and export event CSVs. [Definitions and limits](docs/SIGNAL-TRACKS.md).
 - Edit in a graphite workspace with a multi-track timeline, scrubbing/zoom, keyboard playback, frame stepping, AOI undo/redo and independently rotatable eye monitors.
 - Replay independent left/right raw eye videos alongside the viewed scene on one timeline. Preserve each camera’s clock, visibility interval and frame timestamps. Inspect and seek per-eye pupil traces.
 - Replay MP4, WebM and images with gaze, fixation scanpaths and duration-weighted heatmaps. Use actual frame PTS and editable clock anchors; no FPS-based gaze alignment.
@@ -20,7 +21,7 @@ An open source workspace for aligned video and gaze replay, dynamic areas of int
 - Compare independent prediction and reference CSVs: mean/median/P90/RMSE pixel error, angular error with supplied screen geometry, per-participant results, pairing coverage and controlled constant-target precision.
 - Save immutable recording revisions to private browser-session workspaces in Cloudflare R2 + D1. Video streaming supports HTTP ranges. Original inputs and analysis snapshots accompany uploads.
 
-The default example is a **real binocular eye-camera recording**: a 20-second excerpt from Through the Eyes of Emotion, with both eye videos, VR scene and gaze. It uses estimated gaze/scene alignment and retains the original source files in our R2 archive; [provenance and limits](docs/BINOCULAR.md). A real 78-second GazeMining replay and a clearly labeled synthetic fixture remain available. Neither replay constitutes a webcam-model accuracy benchmark.
+The default example is a **real binocular eye-camera recording**: a 20-second excerpt from Through the Eyes of Emotion, with both eye videos, VR scene and gaze. It uses estimated gaze/scene alignment and retains the original source files in our R2 archive; [provenance and limits](docs/BINOCULAR.md). A real 78-second GazeMining replay remains available. Attention Garden has been removed from the workspace and public assets; synthetic fixtures exist only in the test suite. Neither real replay constitutes a webcam-model accuracy benchmark.
 
 ## Run locally
 

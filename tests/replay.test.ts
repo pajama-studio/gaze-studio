@@ -7,7 +7,7 @@ import {
   importPackage,
   validateRecording,
 } from "../src/core/io";
-import { fixture } from "../src/core/fixture";
+import { fixture } from "./fixtures/recording";
 import { DEFAULT_SETTINGS } from "../src/core/types";
 import type { AOI, Recording } from "../src/core/types";
 import { gzipSync, strToU8 } from "fflate";

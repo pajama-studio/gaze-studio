@@ -1161,3 +1161,41 @@ tr:hover td {
 .modal .dropzone strong {
   color: #b1c9e7;
 }
+.event-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 0 12px;
+}
+.event-tabs button {
+  border: 1px solid #3a475b;
+  background: #202b3c;
+  color: #acbfd8;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+.event-tabs button[aria-selected="true"] {
+  background: #345176;
+  color: #e2edff;
+  border-color: #6b94c8;
+}
+.event-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 15px;
+  font-size: 11px;
+  color: #8fa6c6;
+}
+.event-pagination button {
+  padding: 7px 10px;
+  border: 1px solid #3c4e69;
+  border-radius: 4px;
+  background: #293a52;
+  color: #bed0ea;
+}
+.event-pagination button:disabled {
+  opacity: 0.4;
+}

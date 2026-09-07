@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { fixture } from "../src/core/fixture";
+import { fixture } from "./fixtures/recording";
 import {
   validateRecording,
   exportPackage,
@@ -9,6 +9,7 @@ import { mapTime } from "../src/core/time";
 import type { VideoTrack } from "../src/core/types";
 const track = (): VideoTrack => ({
   id: "left",
+  viewRotation: 180,
   role: "left-eye",
   name: "eye.mp4",
   url: "blob:eye",
@@ -41,6 +42,7 @@ describe("binocular stream protocol", () => {
       new Uint8Array(await restored.videoTracks![0].blob!.arrayBuffer()),
     ).toEqual(new Uint8Array([1, 2, 3]));
     expect(restored.eyeSignals).toEqual(r.eyeSignals);
+    expect(restored.videoTracks![0].viewRotation).toBe(180);
   });
   it("maps scene time to an independent eye clock with offset and drift", () => {
     const t = track();
@@ -56,6 +58,8 @@ describe("binocular stream protocol", () => {
     expect(() => validateRecording(r)).toThrow();
     r.videoTracks = [{ ...track(), end: 13e6 }];
     expect(() => validateRecording(r)).toThrow(/track/);
+    r.videoTracks = [{ ...track(), viewRotation: 45 as any }];
+    expect(() => validateRecording(r)).toThrow(/rotation/);
     r.videoTracks = [];
     r.eyeSignals = [
       { t: 5000, eye: "left", pupil: 4, pupilUnit: "mm", confidence: 1 },

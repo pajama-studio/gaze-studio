@@ -60,15 +60,30 @@ import {
   validateRecording,
 } from "./core/io";
 import { detectAOIs } from "./core/detection";
-import { fixture } from "./core/fixture";
 import { DATASETS } from "./core/catalog";
 import { validateAnchors } from "./core/time";
 import { hasRecordedDOM, recordedAOIs, replaySettings } from "./core/replay";
 import { isAutomaticAOI } from "./core/aoi";
 type Tab = "replay" | "analysis" | "benchmark" | "datasets";
+// Only used while loading or when the workspace is empty. Never a demo recording.
+const EMPTY_RECORDING: Recording = {
+  id: "",
+  title: "",
+  description: "",
+  width: 1,
+  height: 1,
+  duration: 1,
+  mediaUrl: "",
+  mediaName: "",
+  mediaType: "image",
+  samples: [],
+  aois: [],
+  anchors: [{ gaze: 0, media: 0 }],
+  source: { license: "", synthetic: false },
+};
 export function App() {
-  const [recordings, setRecordings] = useState<Recording[]>([fixture()]),
-    [active, setActive] = useState("clock-fixture"),
+  const [recordings, setRecordings] = useState<Recording[]>([]),
+    [active, setActive] = useState(""),
     [tab, setTab] = useState<Tab>("replay"),
     [panel, setPanel] = useState<"aoi" | "sync" | "details">("aoi");
   const clock = useMemo(() => new PlaybackClock(), []);
@@ -94,7 +109,8 @@ export function App() {
     redo = useRef<AOI[][]>([]),
     detectionAbort = useRef<AbortController | null>(null),
     activeRef = useRef(active);
-  const recording = recordings.find((r) => r.id === active) ?? recordings[0];
+  const recording =
+    recordings.find((r) => r.id === active) ?? recordings[0] ?? EMPTY_RECORDING;
   const {
     result,
     execution,
@@ -109,25 +125,50 @@ export function App() {
     [recording.samples],
   );
   const [anchorsText, setAnchorsText] = useState("0, 0");
+  const [localSaveState, setLocalSaveState] = useState("");
+  const saveSequence = useRef(0);
   useEffect(() => {
     let cancelled = false;
     (async () => {
       const preferred = localStorage.getItem("gaze-studio-active");
-      const local = await loadLocal();
-      const demoResponse = await fetch("/datasets/gazemining.json");
-      const demo =
-        demoResponse.ok &&
-        demoResponse.headers.get("content-type")?.includes("json")
-          ? ((await demoResponse.json()) as Recording)
-          : null;
-      const binocular = (await fetch("/api/datasets/emotion-p01-0a/recording")
-        .then((r) => (r.ok ? r.json() : null))
-        .catch(() => null)) as Recording | null;
+      const example = async (url: string): Promise<Recording | null> => {
+        try {
+          const response = await fetch(url);
+          if (
+            !response.ok ||
+            !response.headers.get("content-type")?.includes("json")
+          )
+            return null;
+          const value = (await response.json()) as Recording;
+          validateRecording(value);
+          return value;
+        } catch {
+          return null;
+        }
+      };
+      const [saved, demo, binocular] = await Promise.all([
+        loadLocal().catch(() => [] as Recording[]),
+        example("/datasets/gazemining.json"),
+        example("/api/datasets/emotion-p01-0a/recording"),
+      ]);
+      const local = saved
+        .filter((r) => r.id !== "clock-fixture")
+        .map((r) =>
+          r.id === "emotion-p01-0a"
+            ? ({
+                ...r,
+                videoTracks: r.videoTracks?.map((t) => ({
+                  ...t,
+                  viewRotation:
+                    t.viewRotation ?? (t.role === "left-eye" ? 180 : 0),
+                })),
+              } as Recording)
+            : r,
+        );
       if (cancelled) return;
       if (demo) validateRecording(demo);
       if (binocular) validateRecording(binocular);
       const all = [
-        fixture(),
         ...(demo ? [demo] : []),
         ...(binocular ? [binocular] : []),
         ...local,
@@ -139,6 +180,7 @@ export function App() {
         setActive(preferred);
       else if (binocular) setActive(binocular.id);
       else if (demo) setActive(demo.id);
+      else setActive(unique[0]?.id ?? "");
     })().catch((e) => {
       hydrated.current = true;
       setError(String(e));
@@ -149,6 +191,8 @@ export function App() {
   }, []);
   useEffect(() => {
     activeRef.current = active;
+    ++saveSequence.current;
+    setLocalSaveState("");
     if (hydrated.current && recordings.some((r) => r.id === active))
       localStorage.setItem("gaze-studio-active", active);
     detectionAbort.current?.abort();
@@ -174,7 +218,17 @@ export function App() {
     setRecordings((items) =>
       items.map((r) => (r.id === updated.id ? updated : r)),
     );
-    saveLocal(updated).catch((e) => setError(`Local save failed: ${e}`));
+    const sequence = ++saveSequence.current;
+    setLocalSaveState("Saving in browser…");
+    saveLocal(updated)
+      .then(() => {
+        if (sequence === saveSequence.current)
+          setLocalSaveState("Saved in browser");
+      })
+      .catch((e) => {
+        setLocalSaveState("Local save failed");
+        setError(`Local save failed: ${e}`);
+      });
   };
   const updateAOIs = (aois: AOI[]) => {
     redo.current = [];
@@ -422,6 +476,28 @@ export function App() {
       <main className="initial-loading">
         <Eye size={30} />
         <p>Loading your recordings…</p>
+      </main>
+    );
+  if (!recordings.length)
+    return (
+      <main className="initial-loading">
+        <Eye size={30} />
+        <h1>Open a recording</h1>
+        <p>
+          {error || "Import a video and gaze data, or a portable Gaze Package."}
+        </p>
+        <button onClick={() => setImporting(true)}>Import recording</button>
+        <button onClick={() => location.reload()}>
+          Reload public recordings
+        </button>
+        {importing && (
+          <Suspense fallback={<p>Opening import…</p>}>
+            <ImportDialog
+              close={() => setImporting(false)}
+              onImport={addRecording}
+            />
+          </Suspense>
+        )}
       </main>
     );
   return (
@@ -753,6 +829,9 @@ export function App() {
                       selected={selected}
                       onSelect={setSelected}
                       onAOIs={updateAOIs}
+                      onVideoTracks={(tracks) =>
+                        update({ ...recording, videoTracks: tracks })
+                      }
                       analysis={result}
                       videoRef={videoRef}
                     />
@@ -1197,7 +1276,7 @@ export function App() {
                             <dt>Citation</dt>
                             <dd>
                               {recording.source.citation ??
-                                "User-supplied / synthetic fixture"}
+                                "User-supplied recording"}
                             </dd>
                           </dl>
                           {recording.source.url && (
@@ -1224,16 +1303,13 @@ export function App() {
                                 );
                                 setActive(
                                   recordings.find((r) => r.id !== recording.id)
-                                    ?.id ?? "clock-fixture",
+                                    ?.id ?? "",
                                 );
                               })
                             }
                             disabled={
                               recordings.length <= 1 ||
-                              [
-                                "clock-fixture",
-                                "gazemining-p1-amazon",
-                              ].includes(recording.id)
+                              ["gazemining-p1-amazon"].includes(recording.id)
                             }
                           >
                             <Trash2 size={15} /> Remove local recording
@@ -1244,6 +1320,11 @@ export function App() {
                   </div>
                   <Metrics result={result} />
                   <div className="under-player">
+                    {localSaveState && (
+                      <span role="status" aria-live="polite">
+                        {localSaveState}
+                      </span>
+                    )}
                     <span>
                       <span className="live-dot" />{" "}
                       {execution
@@ -1262,6 +1343,11 @@ export function App() {
                   result={result}
                   settings={settings}
                   onSettings={changeSettings}
+                  onReplayTime={(t) => {
+                    setTab("replay");
+                    setTime(t);
+                    setPlaying(false);
+                  }}
                   onReplayAOI={(id, t) => {
                     setTab("replay");
                     setPanel("aoi");

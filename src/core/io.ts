@@ -196,6 +196,13 @@ export function validateRecording(r: Recording) {
       throw new Error("Expected at most six uniquely named video tracks.");
     for (const t of r.videoTracks) {
       if (
+        t.viewRotation !== undefined &&
+        ![0, 90, 180, 270].includes(t.viewRotation)
+      )
+        throw new Error(
+          "Camera view rotation must be 0, 90, 180 or 270 degrees.",
+        );
+      if (
         !t.id ||
         !["left-eye", "right-eye", "context"].includes(t.role) ||
         typeof t.url !== "string" ||

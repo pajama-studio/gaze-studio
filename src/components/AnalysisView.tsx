@@ -10,6 +10,7 @@ import {
 import { download } from "../core/io";
 import { quantile } from "../core/analysis";
 import { coveredDuration } from "../core/aoi";
+import { EyeEvents } from "./EyeEvents";
 const ms = (t: number) => `${(t / 1000).toFixed(0)} ms`;
 export function Metrics({ result }: { result: Analysis | null }) {
   const r = result;
@@ -72,12 +73,14 @@ export function AnalysisView({
   settings,
   onSettings,
   onReplayAOI,
+  onReplayTime,
 }: {
   recording: Recording;
   result: Analysis | null;
   settings: Settings;
   onSettings: (s: Settings) => void;
   onReplayAOI: (id: string, time: number) => void;
+  onReplayTime: (time: number) => void;
 }) {
   const change = (key: keyof Settings, value: string | number) =>
     onSettings({ ...settings, [key]: value });
@@ -155,6 +158,7 @@ export function AnalysisView({
   return (
     <div className="analysis-view">
       <Metrics result={result} />
+      <EyeEvents result={result} onReplay={onReplayTime} />
       {!!result?.eyeSignals?.length && (
         <section className="panel eye-statistics">
           <div className="section-heading">
@@ -320,6 +324,19 @@ export function AnalysisView({
               }
             />
           </label>
+          {settings.method === "idt" && (
+            <label>
+              Saccade velocity (px/s)
+              <input
+                type="number"
+                min="1"
+                value={settings.velocity}
+                onChange={(e) =>
+                  change("velocity", Math.max(1, +e.target.value))
+                }
+              />
+            </label>
+          )}
           <label>
             Maximum gap (ms)
             <input
@@ -424,7 +441,7 @@ export function AnalysisView({
           </button>
         </div>
         <div className="table-scroll">
-          <table>
+          <table aria-label="AOI metrics">
             <thead>
               <tr>
                 <th>Area</th>

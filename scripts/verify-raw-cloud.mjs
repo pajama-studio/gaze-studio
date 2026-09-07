@@ -17,7 +17,7 @@ async function roundtrip(title) {
   await page
     .getByRole("button", { name: "Save to cloud", exact: true })
     .click();
-  await expect(page.getByRole("status")).toContainText(
+  await expect(page.locator('.toast[role="status"]')).toContainText(
     "Saved to your private cloud workspace",
     { timeout: 60000 },
   );
@@ -68,6 +68,15 @@ async function roundtrip(title) {
     .get(base + "/api/recordings/" + list[0].id)
     .then((r) => r.json());
   expect(metadata.videoTracks).toHaveLength(2);
+  if (title === "Through both eyes") {
+    expect(
+      metadata.videoTracks.find((t) => t.role === "left-eye").viewRotation,
+    ).toBe(180);
+    await expect(page.locator('[data-role="left-eye"] video')).toHaveCSS(
+      "transform",
+      "matrix(-1, 0, 0, -1, 0, 0)",
+    );
+  }
   expect(metadata.eyeSignals.length).toBeGreaterThan(4000);
   results.push({
     title,
@@ -75,6 +84,7 @@ async function roundtrip(title) {
       role: t.role,
       anchors: t.anchors.length,
       frames: t.frameTimes.length,
+      viewRotation: t.viewRotation ?? 0,
     })),
     signals: metadata.eyeSignals.length,
   });

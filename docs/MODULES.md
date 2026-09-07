@@ -7,7 +7,7 @@ This is new MIT-licensed implementation code. Cogix informed the workflow and im
 | `packages/core` / `@pajama-studio/gaze-core` | Typed recordings, eye-video tracks, AOIs, clock mapping, frame lookup and geometry | React, storage, Cloudflare |
 | `crates/gaze-core` | Rust I-VT/I-DT, quality intervals, fixation attribution, AOI dwell/visits/TTFF/transitions and partition merging | DOM, React, Cloudflare |
 | `packages/analysis` / `@pajama-studio/gaze-analysis` | Compiled WASM, bounded Web Worker pool, cancellation and batch execution | React, Studio UI |
-| `packages/react` / `@pajama-studio/gaze-react` | GazeReplay, PlaybackControls, AOITimeline, FixationHeatmap, SynchronizedVideo(s), EyeSignalTimeline, useGazeAnalysis, ClockedReplay, MediaTimeline | Studio application, D1, R2 |
+| `packages/react` / `@pajama-studio/gaze-react` | GazeReplay, PlaybackControls, AOITimeline, FixationHeatmap, SynchronizedVideo(s), EyeSignalTimeline, useGazeAnalysis, ClockedReplay, MediaTimeline, SignalTimeline | Studio application, D1, R2 |
 | `src/core/io.ts`, `storage.ts` | Format adapters, portable ZIP checksums, IndexedDB and private cloud revisions | Detector implementations |
 | `worker/detectors.ts` | Backend object detection provider contract and Workers AI DETR implementation | React and playback |
 | `worker/datasets.ts` | Read-only curated dataset catalog and allowlisted R2 assets | Analysis engine |
@@ -55,3 +55,5 @@ SAM is **not deployed** in this release. The backend detector interface makes re
 The multi-track timeline coalesces pointer moves with requestAnimationFrame and flushes the final position on release. Keyboard shortcuts support Space, left/right frame stepping, Shift left/right one second, Home/End, R/V drawing selection, G/H overlays, Escape to cancel, and Ctrl/Command Z / Shift Z for AOI undo/redo. Editable fields keep native keyboard handling. Camera rotation changes presentation only.
 
 Import and benchmark views load as separate chunks. AOI name edits commit on blur/Enter instead of resaving raw recordings and cancelling analysis on every keystroke. The worker pool caches participant partitions for unchanged sample arrays.
+
+`SignalTimeline` is an independent five-track React control. Numeric trace geometry is memoized and decimated with extrema and gap preservation; playback only updates cursors and current sample readouts. Saccade candidates are derived in Rust per participant and merged by the existing worker pool. Synthetic recordings and their image assets live exclusively in `tests/fixtures/`.

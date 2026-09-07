@@ -713,3 +713,170 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Shared numeric and event tracks use exactly the media ruler's time domain. */
+.gaze-player .eye-view-actions {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.gaze-player .eye-view-actions button {
+  font-size: 9px;
+  min-width: 25px;
+  width: auto;
+  padding: 2px 4px;
+}
+.gaze-player .eye-view-actions button[aria-pressed="true"] {
+  background: #3b4d69;
+  color: #d4e4ff;
+}
+.gaze-player .signal-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  padding: 8px 10px;
+  border-bottom: 1px solid #303846;
+  background: #202630;
+}
+.gaze-player .signal-toggles label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: #bac9df;
+}
+.gaze-player .signal-toggles input {
+  accent-color: #87b6ed;
+  width: 13px;
+  height: 13px;
+}
+.gaze-player .signal-timeline {
+  position: relative;
+}
+.gaze-player .signal-row {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  border-top: 1px solid #2c333e;
+  min-height: 65px;
+}
+.gaze-player .signal-name {
+  padding: 9px 5px 5px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: #1b2028;
+  z-index: 1;
+}
+.gaze-player .signal-name strong {
+  font-size: 9px;
+  font-weight: 500;
+  color: #c8d6e9;
+}
+.gaze-player .signal-name small {
+  font-size: 8px;
+  color: #8094af;
+}
+.gaze-player .signal-track-content {
+  min-width: 0;
+  position: relative;
+  background: #13191f;
+}
+.gaze-player .signal-plot {
+  width: 100%;
+  height: 52px;
+  display: block;
+  touch-action: pan-y;
+  cursor: crosshair;
+  outline-offset: -2px;
+}
+.gaze-player .signal-plot [data-signal-event] {
+  cursor: pointer;
+  outline: none;
+}
+.gaze-player .signal-plot [data-signal-event]:hover,
+.gaze-player .signal-plot [data-signal-event]:focus {
+  stroke: #eef5ff;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.gaze-player .signal-grid {
+  stroke: #293442;
+  stroke-width: 0.5;
+  vector-effect: non-scaling-stroke;
+}
+.gaze-player .signal-empty {
+  fill: #9aabc1;
+  font: 12px sans-serif;
+}
+.gaze-player .signal-readout {
+  position: absolute;
+  right: 5px;
+  top: 1px;
+  font:
+    8px ui-monospace,
+    monospace;
+  display: flex;
+  gap: 10px;
+  pointer-events: none;
+  background: #13191fd9;
+  padding: 2px 4px;
+  max-width: 100%;
+  color: #8399b7;
+}
+.gaze-player .signal-cursor-bed {
+  position: absolute;
+  inset: 0 0 0 78px;
+  pointer-events: none;
+}
+.gaze-player .signal-cursor {
+  height: 100%;
+  position: absolute;
+  border-left: 1px solid #e7b66d;
+}
+.gaze-player .signal-event-detail {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px 12px;
+  padding: 10px;
+  color: #9eb5d2;
+  background: #26354a;
+  font-size: 10px;
+}
+.gaze-player .signal-event-detail strong {
+  color: #e0ebfc;
+}
+.gaze-player .signal-event-detail button {
+  padding: 5px 8px;
+  color: #cde1ff;
+  background: #334f72;
+  border: 1px solid #507198;
+  border-radius: 4px;
+}
+.gaze-player .signal-participant {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 7px 10px;
+  font-size: 10px;
+  color: #a8bedb;
+}
+.gaze-player .signal-participant select {
+  background: #27354a;
+  color: #d0dced;
+  border: 1px solid #3c506e;
+}
+@media (max-width: 700px) {
+  .gaze-player .signal-name strong {
+    font-size: 8px;
+  }
+  .gaze-player .signal-readout {
+    gap: 5px;
+    font-size: 7px;
+  }
+  .gaze-player .signal-event-detail {
+    align-items: flex-start;
+  }
+}

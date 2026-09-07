@@ -44,3 +44,7 @@ Import the generated `harmonic.gaze.zip` through Studio's Import dialog. For ano
 ## What these data evaluate
 
 These data validate file ingestion, frame alignment, playback, AOI analysis and repeatable signal processing. Their near-eye infrared cameras are different from laptop RGB webcams. Replaying the recorded gaze does not evaluate a new webcam estimator. A webcam accuracy benchmark must run that estimator on a suitable labeled dataset with held-out participants and a documented calibration protocol.
+
+### Viewing orientation
+
+The Emotion excerpt’s left-eye source image is inverted relative to the right-eye view. Its curated `eye1` track now declares a clockwise 180° `viewRotation`; `eye0` declares 0°. This is a dataset-specific display correction, not a universal rule for left/right cameras. Use the angle/Raw button to inspect original orientation, or rotate either view in 90° steps. The saved angle is portable; no mirrored or rotated frames are re-encoded and gaze stays in scene coordinates. Pupil Player likewise exposes eye-video flip controls ([official documentation](https://docs.pupil-labs.com/core/software/pupil-player/#vis-eye-video-overlay)).

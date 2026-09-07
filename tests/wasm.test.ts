@@ -5,7 +5,7 @@ import init, {
   merge_json,
 } from "../packages/analysis/wasm/gaze_core.js";
 import { analyze } from "../src/core/analysis";
-import { fixture } from "../src/core/fixture";
+import { fixture } from "./fixtures/recording";
 import {
   DEFAULT_SETTINGS,
   type Recording,
@@ -99,4 +99,36 @@ describe("compiled Rust WASM differential validation", () => {
       compare(run(r, settings, true), analyze(r, settings));
     }
   });
+});
+
+it("Rust saccade candidates preserve participant isolation, window and mapped media clocks", () => {
+  const r = fixture();
+  r.anchors = [{ gaze: 0, media: 10000 }];
+  r.samples = [
+    { t: 0, x: 0, y: 0, valid: true, participant: "A" },
+    { t: 10000, x: 20, y: 0, valid: true, participant: "A" },
+    { t: 20000, x: 50, y: 0, valid: true, participant: "A" },
+    { t: 0, x: 100, y: 0, valid: true, participant: "B" },
+    { t: 10000, x: 110, y: 0, valid: true, participant: "B" },
+  ];
+  const settings = { ...DEFAULT_SETTINGS, start: 0, end: r.duration };
+  const result = run(r, settings, true);
+  expect(result.saccades).toHaveLength(2);
+  expect(result.saccades[0]).toMatchObject({
+    start: 10000,
+    end: 30000,
+    amplitude: 50,
+    peakVelocity: 3000,
+    participant: "A",
+  });
+  expect(
+    run(r, { ...settings, participant: "A", start: 20000 }, true).saccades,
+  ).toEqual([
+    expect.objectContaining({
+      start: 20000,
+      end: 30000,
+      amplitude: 30,
+      participant: "A",
+    }),
+  ]);
 });

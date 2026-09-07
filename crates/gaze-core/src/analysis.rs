@@ -58,6 +58,7 @@ pub fn analyze(r: Recording, mut s: Settings) -> Result<Partial, String> {
         median_hz: 0.,
         gaps: 0,
         fixations: Vec::new(),
+        saccades: Vec::new(),
         aoi: aois
             .iter()
             .map(|a| Metric {
@@ -79,7 +80,7 @@ pub fn analyze(r: Recording, mut s: Settings) -> Result<Partial, String> {
         blink_samples: 0,
         velocities: Vec::new(),
         parameters: s.clone(),
-        version: "gaze-studio-rust/0.2.0".into(),
+        version: "gaze-studio-rust/0.2.1".into(),
     };
     let mut intervals = Vec::new();
     let mut pupil_sum = 0.;
@@ -91,6 +92,7 @@ pub fn analyze(r: Recording, mut s: Settings) -> Result<Partial, String> {
             .cloned()
             .collect();
         let fixes = events::detect(&range, &s);
+        out.saccades.extend(events::saccades(&range, &s));
         out.samples += range.len();
         out.valid_samples += range.iter().filter(|g| g.usable()).count();
         out.blink_samples += range.iter().filter(|g| g.blink).count();
@@ -239,6 +241,7 @@ pub fn merge(mut parts: Vec<Partial>) -> Result<Analysis, String> {
         a.gaps += b.gaps;
         a.blink_samples += b.blink_samples;
         a.fixations.extend(b.fixations);
+        a.saccades.extend(b.saccades);
         a.sequences.extend(b.sequences);
         a.velocities.extend(b.velocities);
         a.pupil.count += b.pupil.count;

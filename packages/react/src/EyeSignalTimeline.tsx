@@ -86,7 +86,7 @@ export function EyeSignalTimeline({
             <div>
               <strong>{row.eye === "left" ? "Left" : "Right"} pupil</strong>
               <small>
-                {fresh && current.pupil !== null
+                {fresh && current.pupil !== null && current.confidence >= 0.6
                   ? `${current.pupil.toFixed(2)} ${current.pupilUnit}`
                   : "No valid sample"}
               </small>

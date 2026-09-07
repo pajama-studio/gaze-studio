@@ -93,7 +93,8 @@ try {
   await browser.close();
 }
 await fs.writeFile(
-  "artifacts/verification/playback-performance.json",
+  process.env.PERFORMANCE_REPORT ||
+    "artifacts/verification/playback-performance.json",
   JSON.stringify(
     {
       time: new Date().toISOString(),

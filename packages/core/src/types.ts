@@ -52,6 +52,8 @@ export interface VideoTrack {
   frameTimes?: number[];
   blob?: Blob;
   source?: string;
+  /** Clockwise presentation rotation only; source frames and gaze coordinates are unchanged. */
+  viewRotation?: 0 | 90 | 180 | 270;
 }
 export interface EyeSignal {
   t: number;
@@ -134,6 +136,7 @@ export interface EyeSummary {
   p95: number | null;
 }
 export interface Analysis {
+  saccades?: Saccade[];
   eyeSignals?: EyeSummary[];
   samples: number;
   validSamples: number;
@@ -156,6 +159,17 @@ export interface Analysis {
   velocities: { t: number; v: number }[];
   parameters: Settings;
   version: string;
+}
+export interface Saccade {
+  start: number;
+  end: number;
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  amplitude: number;
+  peakVelocity: number;
+  participant: string;
 }
 export const PALETTE = [
   "#0c9a87",

@@ -203,6 +203,15 @@
                   "type": "integer",
                   "minimum": 0
                 }
+              },
+              "viewRotation": {
+                "enum": [
+                  0,
+                  90,
+                  180,
+                  270
+                ],
+                "description": "Clockwise display rotation only; does not transform source pixels or gaze."
               }
             }
           }

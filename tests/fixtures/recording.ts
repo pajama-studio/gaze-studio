@@ -1,4 +1,4 @@
-import type { Recording } from "./types";
+import type { Recording } from "../../packages/core/src/types";
 export function fixture(): Recording {
   const r: Recording = {
     id: "clock-fixture",
@@ -11,7 +11,8 @@ export function fixture(): Recording {
     duration: 12000000,
     mediaType: "image",
     mediaName: "garden.svg",
-    mediaUrl: "/datasets/garden.svg",
+    mediaUrl:
+      "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E",
     samples: [],
     anchors: [{ gaze: 0, media: 0 }],
     source: {

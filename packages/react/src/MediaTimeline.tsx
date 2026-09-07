@@ -3,6 +3,8 @@ import { Film, Eye, ZoomIn, ZoomOut, ScanLine } from "lucide-react";
 import type { Recording, Analysis } from "@pajama-studio/gaze-core";
 import { clockLabel } from "./format";
 import { AOITimeline } from "./AOITimeline";
+import { SignalTimeline } from "./SignalTimeline";
+import { SIGNAL_TRACKS, type SignalTrackId } from "./signal-data";
 export interface MediaTimelineProps {
   recording: Recording;
   analysis: Analysis | null;
@@ -68,6 +70,10 @@ export function MediaTimeline({
   onPause,
 }: MediaTimelineProps) {
   const [zoom, setZoom] = useState(1);
+  const [trackSettings, setTrackSettings] = useState(false);
+  const [hiddenTracks, setHiddenTracks] = useState<Set<SignalTrackId>>(
+    new Set(),
+  );
   const scroll = useRef<HTMLDivElement>(null),
     drag = useRef(false),
     pending = useRef<number | null>(null),
@@ -111,6 +117,13 @@ export function MediaTimeline({
         </span>
         <div>
           <button
+            aria-label="Choose data tracks"
+            aria-expanded={trackSettings}
+            onClick={() => setTrackSettings((v) => !v)}
+          >
+            Tracks
+          </button>
+          <button
             aria-label="Zoom timeline out"
             disabled={zoom === 1}
             onClick={() => setZoom((z) => Math.max(1, z / 2))}
@@ -127,6 +140,27 @@ export function MediaTimeline({
           </button>
         </div>
       </div>
+      {trackSettings && (
+        <fieldset className="signal-toggles" aria-label="Visible data tracks">
+          {SIGNAL_TRACKS.map((t) => (
+            <label key={t.id}>
+              <input
+                type="checkbox"
+                checked={!hiddenTracks.has(t.id)}
+                onChange={() =>
+                  setHiddenTracks((old) => {
+                    const next = new Set(old);
+                    if (next.has(t.id)) next.delete(t.id);
+                    else next.add(t.id);
+                    return next;
+                  })
+                }
+              />
+              {t.label}
+            </label>
+          ))}
+        </fieldset>
+      )}
       <div className="timeline-scroll" ref={scroll}>
         <div className="timeline-content" style={{ width: `${zoom * 100}%` }}>
           <div className="timeline-ruler">
@@ -204,6 +238,15 @@ export function MediaTimeline({
             time={time}
             duration={r.duration}
             onSeek={onSeek}
+          />
+          <SignalTimeline
+            recording={r}
+            analysis={analysis}
+            participant={participant}
+            time={time}
+            hidden={hiddenTracks}
+            onSeek={onSeek}
+            onPause={onPause}
           />
         </div>
       </div>

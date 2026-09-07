@@ -8,6 +8,9 @@ export interface SynchronizedVideoProps {
   time: number;
   playing: boolean;
   speed?: number;
+  onRotationChange?: (
+    rotation: NonNullable<VideoTrack["viewRotation"]>,
+  ) => void;
 }
 /** The caller's stimulus clock is authoritative. Recorded anchors account for offset and drift; videos never extend beyond their declared capture interval. */
 export function SynchronizedVideo({
@@ -15,12 +18,14 @@ export function SynchronizedVideo({
   time,
   playing,
   speed = 1,
+  onRotationChange,
 }: SynchronizedVideoProps) {
   const video = useRef<HTMLVideoElement>(null),
     latest = useRef({ time, playing, speed });
   latest.current = { time, playing, speed };
   const [error, setError] = useState(""),
-    [rotation, setRotation] = useState(0);
+    [rotation, setRotation] = useState(track.viewRotation ?? 0),
+    [original, setOriginal] = useState(false);
   const available = time >= track.start && time < track.end;
   const target = Math.min(
     track.duration - 1,
@@ -57,10 +62,12 @@ export function SynchronizedVideo({
   useEffect(sync, [time, playing, speed, track]);
   useEffect(() => {
     setError("");
-    setRotation(0);
+    setRotation(track.viewRotation ?? 0);
+    setOriginal(false);
     const v = video.current;
     return () => v?.pause();
   }, [track.url]);
+  useEffect(() => setRotation(track.viewRotation ?? 0), [track.viewRotation]);
   return (
     <figure
       className="eye-video"
@@ -76,13 +83,30 @@ export function SynchronizedVideo({
               ? "Right eye"
               : "Context"}
         </strong>
-        <button
-          aria-label={`Rotate ${track.role} view`}
-          title="Rotate view 90° (original file unchanged)"
-          onClick={() => setRotation((r) => (r + 90) % 360)}
-        >
-          <RotateCw size={12} />
-        </button>
+        <div className="eye-view-actions">
+          <button
+            aria-label={`${original ? "Show corrected" : "Show original"} ${track.role} orientation`}
+            aria-pressed={original}
+            title="Toggle the source camera orientation"
+            onClick={() => setOriginal((v) => !v)}
+          >
+            {original ? "Raw" : `${rotation}°`}
+          </button>
+          <button
+            aria-label={`Rotate ${track.role} view`}
+            title="Rotate view 90° (original file unchanged)"
+            onClick={() => {
+              const next = ((rotation + 90) % 360) as NonNullable<
+                VideoTrack["viewRotation"]
+              >;
+              setRotation(next);
+              setOriginal(false);
+              onRotationChange?.(next);
+            }}
+          >
+            <RotateCw size={12} />
+          </button>
+        </div>
       </figcaption>
       <div
         className="eye-video-frame"
@@ -98,7 +122,7 @@ export function SynchronizedVideo({
           onError={() => setError("This video could not be loaded.")}
           style={{
             visibility: available ? "visible" : "hidden",
-            transform: `rotate(${rotation}deg)`,
+            transform: `rotate(${original ? 0 : rotation}deg) scale(${!original && rotation % 180 ? Math.min(track.width / track.height, track.height / track.width) : 1})`,
           }}
         />
         {!available && (
@@ -122,11 +146,16 @@ export function SynchronizedVideos({
   time,
   playing,
   speed = 1,
+  onRotationChange,
 }: {
   tracks: VideoTrack[];
   time: number;
   playing: boolean;
   speed?: number;
+  onRotationChange?: (
+    id: string,
+    rotation: NonNullable<VideoTrack["viewRotation"]>,
+  ) => void;
 }) {
   const ordered = useMemo(
     () => [...tracks].sort((a, b) => a.role.localeCompare(b.role)),
@@ -141,6 +170,11 @@ export function SynchronizedVideos({
           time={time}
           playing={playing}
           speed={speed}
+          onRotationChange={
+            onRotationChange
+              ? (angle) => onRotationChange(track.id, angle)
+              : undefined
+          }
         />
       ))}
     </div>

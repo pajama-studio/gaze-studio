@@ -85,7 +85,7 @@ try {
       const eye = page.locator('[data-role="left-eye"] video');
       const src = await eye.getAttribute("src");
       await page.getByRole("button", { name: "Rotate left-eye view" }).click();
-      await expect(eye).toHaveCSS("transform", "matrix(0, 1, -1, 0, 0, 0)");
+      await expect(eye).toHaveCSS("transform", "matrix(0, -1, 1, 0, 0, 0)");
       expect(await eye.getAttribute("src")).toBe(src);
       await page.getByRole("button", { name: /EYE CAMERAS/ }).click();
       await expect(page.locator("video")).toHaveCount(1);
@@ -94,20 +94,12 @@ try {
     },
   );
   await check(
-    "three-participant fixture uses parallel Rust workers",
+    "workspace contains real examples and no attention garden fixture",
     async () => {
-      await page
-        .getByRole("button", { name: /The attention garden Synthetic fixture/ })
-        .click();
       await expect(
-        page.getByText(/Rust \/ WASM · [234] workers/),
-      ).toBeVisible();
-      await page
-        .getByRole("button", { name: /Through both eyes Through the Eyes/ })
-        .click();
-      await expect(
-        page.getByRole("heading", { name: "Through both eyes", exact: true }),
-      ).toBeVisible();
+        page.getByRole("button", { name: /The attention garden/ }),
+      ).toHaveCount(0);
+      await expect(page.getByText(/Rust \/ WASM · 1 worker/)).toBeVisible();
     },
   );
   await page.screenshot({
