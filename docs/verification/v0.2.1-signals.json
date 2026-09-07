@@ -1,0 +1,15 @@
+{
+  "base": "https://gaze.pajama.studio",
+  "time": "2026-09-07T01:47:54.010Z",
+  "passed": [
+    "real-only catalog and default corrected left camera preserve source video",
+    "five populated data tracks share the media clock and gaze readouts",
+    "event selection exposes measured evidence and seeks the synchronized videos",
+    "track visibility and zoom keep data lanes aligned",
+    "analysis lists and exports Rust saccade candidates and returns to video evidence",
+    "view rotation persists across refresh without reintroducing the removed fixture",
+    "mobile data tracks fit the viewport and retain all five channels",
+    "saved recording survives unavailable examples and empty workspaces remain importable"
+  ],
+  "errors": []
+}

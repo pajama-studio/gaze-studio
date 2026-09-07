@@ -35,3 +35,9 @@ See `docs/verification/` for preserved reports and `artifacts/verification/` for
 A subsequent CSS adjustment reduces ruler labels in narrow reusable players. [Production measurements](verification/v0.2-compact-timeline.json) checked non-overlap at 390px for 1×, 2×, 4× and 8× zoom. The full editor checks also passed again after this adjustment.
 
 [Final deployment CI](https://github.com/pajama-studio/gaze-studio/actions/runs/34072025822) passed for `1ed80ec407686377dd0158d518bd5cf1cb93371d`, including all 32 browser flows and the native/WASM/API checks above.
+
+## Signal tracks update
+
+The subsequent signal-track revision removes the synthetic product example and defaults the Emotion left-eye view to a reversible 180° correction. It adds five reusable data tracks, Rust saccade candidates, event inspection/CSV exports, and explicit browser-save feedback. Current validation is **74 TypeScript/WASM tests, 5 native Rust tests, and 8 additional signal-track browser workflows** (40 browser flows in the full suite). Details are in [SIGNAL-TRACKS.md](SIGNAL-TRACKS.md). Earlier reports and performance figures above describe their original source revisions.
+
+[Signal-track CI](https://github.com/pajama-studio/gaze-studio/actions/runs/34074121738) passed for source `a32ea1bb7f252699137b56976a07456b1a7c7d66`. The public domain separately passed [eight signal workflows](verification/v0.2.1-signals.json), [seven binocular workflows](verification/v0.2.1-binocular.json) and [both real three-video cloud round trips](verification/v0.2.1-raw-cloud.json). [Deployment metadata](verification/v0.2.1-deployment.json) identifies the exact Cloudflare version.

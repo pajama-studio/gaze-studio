@@ -1,0 +1,21 @@
+{
+  "url": "https://gaze.pajama.studio",
+  "sourceCommit": "a32ea1bb7f252699137b56976a07456b1a7c7d66",
+  "workerVersion": "01add952-cf05-418a-b3ce-735bd290cef3",
+  "time": "2026-09-07T01:49:36.870086+00:00",
+  "analysisEngine": "gaze-studio-rust/0.2.1",
+  "unitTests": 74,
+  "nativeRustTests": 5,
+  "publicSignalChecks": 8,
+  "publicBinocularChecks": 7,
+  "rawCloudTrials": [
+    "Emotion P01/0a",
+    "HARMONIC P122/011"
+  ],
+  "ci": {
+    "url": "https://github.com/pajama-studio/gaze-studio/actions/runs/34074121738",
+    "conclusion": "success",
+    "browserFlows": 40,
+    "apiChecks": 13
+  }
+}
