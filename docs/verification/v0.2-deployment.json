@@ -1,8 +1,8 @@
 {
   "url": "https://gaze.pajama.studio",
-  "workerVersion": "d59ed829-919c-4790-81d1-735d6bd9b680",
-  "sourceCommit": "878391c6b1dd3b8e7b829fba68a8cdc3897d610b",
-  "time": "2026-09-07T01:00:47.913458+00:00",
+  "workerVersion": "da956883-60e4-4ca0-8b4a-7efefa4edd9d",
+  "sourceCommit": "1ed80ec407686377dd0158d518bd5cf1cb93371d",
+  "time": "2026-09-07T01:09:37.708655+00:00",
   "unitTests": 69,
   "nativeRustTests": 3,
   "publicEditorChecks": 7,
@@ -14,14 +14,24 @@
   ],
   "publicBrowserFlows": 11,
   "publicReplayFlows": 7,
-  "ci": {
-    "url": "https://github.com/pajama-studio/gaze-studio/actions/runs/34071511158",
-    "conclusion": "success"
-  },
   "cloudLibrary": {
     "datasets": 5,
     "objectsAtVerification": 93,
     "bytesAtVerification": 954654084,
     "scope": "Obtained source trials and derived/verification assets; not entire source collections."
+  },
+  "initialDeployment": {
+    "workerVersion": "d59ed829-919c-4790-81d1-735d6bd9b680",
+    "sourceCommit": "878391c6b1dd3b8e7b829fba68a8cdc3897d610b",
+    "time": "2026-09-07T01:00:47.913458+00:00",
+    "ci": {
+      "url": "https://github.com/pajama-studio/gaze-studio/actions/runs/34071511158",
+      "conclusion": "success"
+    }
+  },
+  "changeSinceInitial": "CSS container query reduces small-screen ruler labels; production editor and 1x/2x/4x/8x mobile ruler checks passed.",
+  "ci": {
+    "url": "https://github.com/pajama-studio/gaze-studio/actions/runs/34072025822",
+    "conclusion": "success"
   }
 }

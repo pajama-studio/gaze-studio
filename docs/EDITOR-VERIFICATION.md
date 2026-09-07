@@ -2,7 +2,7 @@
 
 The v0.2 editor adds a real binocular replay, reusable controls, Rust/WASM analysis and an owned Cloudflare dataset library. Verification is separated by what it establishes.
 
-The deployed source is `878391c6b1dd3b8e7b829fba68a8cdc3897d610b`; [its CI run passed](https://github.com/pajama-studio/gaze-studio/actions/runs/34071511158). Published reports retain their actual test endpoint and timestamp.
+The initial editor source is `878391c6b1dd3b8e7b829fba68a8cdc3897d610b`; [its CI run passed](https://github.com/pajama-studio/gaze-studio/actions/runs/34071511158). Published reports retain their actual test endpoint and timestamp.
 
 - **69 TypeScript/WASM tests**: existing methods and formats plus saved AOI scope, actual compiled Rust differential comparisons, camera-stream package round trips and external playback-clock behavior.
 - **3 native Rust tests**: clock drift, invalid analysis input and confidence-filtered pupil statistics with mixed-unit rejection.
@@ -31,3 +31,7 @@ This single pair supports reduced JavaScript work for this recording. It does no
 The primary architectural improvement is that frame-time updates no longer re-render the Studio shell. Participant and static timeline indexes are cached; pointer moves are coalesced; redundant rate writes are avoided; import and benchmark tools are loaded separately. The numerical kernel runs outside the UI thread. It remains bounded to interactive trials; a streaming implementation for multi-million-sample recordings is still future work.
 
 See `docs/verification/` for preserved reports and `artifacts/verification/` for local/CI outputs. Reproduction commands are listed in the root README and package scripts.
+
+A subsequent CSS adjustment reduces ruler labels in narrow reusable players. [Production measurements](verification/v0.2-compact-timeline.json) checked non-overlap at 390px for 1×, 2×, 4× and 8× zoom. The full editor checks also passed again after this adjustment.
+
+[Final deployment CI](https://github.com/pajama-studio/gaze-studio/actions/runs/34072025822) passed for `1ed80ec407686377dd0158d518bd5cf1cb93371d`, including all 32 browser flows and the native/WASM/API checks above.
