@@ -2,6 +2,8 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
 import "./style.css";
+import "@pajama-studio/gaze-react/style.css";
+import "./editor.css";
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <App />

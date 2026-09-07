@@ -45,3 +45,6 @@ python3 scripts/prepare-gazemining.py
 ```
 
 Hashes, sizes, sample and frame counts: [gazemining-provenance.json](gazemining-provenance.json). The source parser was inspected at commit `54d0699ed6b3041ab990dca3ce6bcf8217f840d0` ([Parser.cpp](https://github.com/raphaelmenges/visual-stimuli-discovery/blob/54d0699ed6b3041ab990dca3ce6bcf8217f840d0/code/src/lib/Stage/Processing/Parser.cpp), [Layer.hpp](https://github.com/raphaelmenges/visual-stimuli-discovery/blob/54d0699ed6b3041ab990dca3ce6bcf8217f840d0/code/src/lib/Data/Layer.hpp)).
+
+
+The v0.2 default includes real left/right eye imagery from **Through the Eyes of Emotion**, and privately archives the official **HARMONIC** sample with explicit per-frame capture clocks. Detailed source links, licenses, downloaded subset, frame counts and synchronization limitations are in [BINOCULAR.md](BINOCULAR.md). The replay controls do not assume that a dataset with numerical left/right gaze also contains eye images.

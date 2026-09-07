@@ -157,3 +157,18 @@ BIDS draft export writes one participant with known recorded eye and approximate
 - Optional extensions use named, versioned metadata; unknown extensions are retained where possible, never interpreted silently.
 - Planned dataset-level manifests will index many recordings and time-partitioned Arrow/Parquet objects while retaining the same explicit clock and geometry contracts.
 - Annotation revisions and analysis runs will reference immutable source/parameter/AOI hashes. Current packages already carry source file hashes and analysis exports carry parameters/version; a content-addressed analysis cache is not implemented yet.
+
+
+## Version 0.2: raw eye-camera streams
+
+The exporter now writes `0.2.0`; the reader accepts `0.1.0` and `0.2.0`. This is an experimental project protocol, not an industry standard.
+
+`recording.videoTracks` holds up to six auxiliary videos. Each has a unique `id`, `role` (`left-eye`, `right-eye`, `context`), name, native dimensions, encoded duration, media path, optional actual frame PTS and `anchors`. Every embedded video is a checksummed package file. `start` and `end` form a half-open interval on the master scene clock; outside it the UI shows no frame.
+
+**Clock distinction:** recording-level anchors map gaze timestamps to scene-video PTS. For auxiliary video anchors, the existing `gaze` field means **master scene-video PTS**, and `media` means that auxiliary video's PTS. Both are integer microseconds. Anchors must be strictly increasing on both axes. This reused field name is retained for compatibility; consumers must use the documented track context. For example, `[{gaze:1000000,media:0},{gaze:11000000,media:9900000}]` describes an eye camera starting at scene 1 s with a different clock rate.
+
+`recording.eyeSignals` holds time-stamped derived measurements: `t` (gaze clock), `eye`, confidence in [0,1], nullable pupil diameter and an explicit `pupilUnit` (`mm`, `px`, `arbitrary`). These are separate from raw eye images. Streams are strictly increasing per eye; mixed pupil units are rejected by the Rust summary. Current auxiliary streams describe one participant's camera rig.
+
+`recording.analysisSettings` preserves finite analysis windows, method, thresholds, participant and `aoiScope` (`all` or `automatic`). Only reviewed areas enter metrics. Portable export caps combined embedded data at 128 MiB; it does not silently omit an eye movie. Larger original archives live in R2 with an inventory.
+
+IndexedDB refreshes object URLs for all embedded media on reload. Private cloud revisions upload auxiliary videos as `track-0` through `track-5`, then load them through the same authenticated range-serving API as the scene video.

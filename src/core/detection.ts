@@ -7,6 +7,7 @@ export async function detectAOIs(
   times: number[],
   progress: (text: string) => void,
   signal?: AbortSignal,
+  endTime?: number,
 ): Promise<AOI[]> {
   await connectCloud();
   const media = document.createElement(
@@ -17,20 +18,6 @@ export async function detectAOIs(
     media.muted = true;
     media.preload = "auto";
   }
-  const ready = new Promise<void>((resolve, reject) => {
-    media.addEventListener(
-      recording.mediaType === "video" ? "loadeddata" : "load",
-      () => resolve(),
-      { once: true },
-    );
-    media.addEventListener(
-      "error",
-      () => reject(new Error("Could not decode media for detection.")),
-      { once: true },
-    );
-  });
-  media.src = recording.mediaUrl;
-  await ready;
   const canvas = document.createElement("canvas"),
     ratio = Math.min(1, 960 / recording.width);
   canvas.width = Math.round(recording.width * ratio);
@@ -40,6 +27,14 @@ export async function detectAOIs(
   let previousHistogram: number[] | null = null;
   let lastFrame = -Infinity;
   try {
+    await waitForMedia(
+      media,
+      recording.mediaType === "video" ? "loadeddata" : "load",
+      () => {
+        media.src = recording.mediaUrl;
+      },
+      signal,
+    );
     for (let i = 0; i < times.length; i++) {
       signal?.throwIfAborted();
       const t = times[i];
@@ -48,10 +43,14 @@ export async function detectAOIs(
         media instanceof HTMLVideoElement &&
         Math.abs(media.currentTime - t / 1e6) > 0.001
       )
-        await new Promise<void>((resolve) => {
-          media.addEventListener("seeked", () => resolve(), { once: true });
-          media.currentTime = t / 1e6;
-        });
+        await waitForMedia(
+          media,
+          "seeked",
+          () => {
+            media.currentTime = t / 1e6;
+          },
+          signal,
+        );
       context.drawImage(media, 0, 0, canvas.width, canvas.height);
       const pixels = context.getImageData(
           0,
@@ -105,15 +104,20 @@ export async function detectAOIs(
               .sort((a, b) => b.score - a.score)
           : [];
         const existing = candidates[0]?.score > 0.25 ? candidates[0].a : null;
-        const end = Math.min(
-          recording.duration,
-          t +
-            (times[i + 1]
-              ? times[i + 1] - t
-              : times.length > 1
-                ? times[i] - times[i - 1]
-                : 1e6),
-        );
+        const end =
+          recording.mediaType === "image"
+            ? recording.duration
+            : Math.min(
+                recording.duration,
+                t +
+                  (times[i + 1]
+                    ? times[i + 1] - t
+                    : endTime !== undefined
+                      ? endTime - t
+                      : times.length > 1
+                        ? times[i] - times[i - 1]
+                        : 1e6),
+              );
         if (existing) {
           existing.keyframes.push({ t, points });
           existing.end = end;
@@ -144,4 +148,56 @@ export async function detectAOIs(
     if (media instanceof HTMLVideoElement) media.load();
   }
   return proposals;
+}
+
+function waitForMedia(
+  media: HTMLVideoElement | HTMLImageElement,
+  event: string,
+  action: () => void,
+  signal?: AbortSignal,
+) {
+  return new Promise<void>((resolve, reject) => {
+    if (signal?.aborted) {
+      reject(signal.reason);
+      return;
+    }
+    const cleanup = () => {
+      clearTimeout(timer);
+      media.removeEventListener(event, done);
+      media.removeEventListener("error", failed);
+      signal?.removeEventListener("abort", aborted);
+    };
+    const done = () => {
+      cleanup();
+      resolve();
+    };
+    const failed = () => {
+      cleanup();
+      reject(new Error("Could not decode media for automatic annotation."));
+    };
+    const aborted = () => {
+      cleanup();
+      reject(
+        signal?.reason ??
+          new DOMException("Annotation cancelled", "AbortError"),
+      );
+    };
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(
+        new Error(
+          "Media did not become ready for annotation. Try another frame.",
+        ),
+      );
+    }, 20000);
+    media.addEventListener(event, done, { once: true });
+    media.addEventListener("error", failed, { once: true });
+    signal?.addEventListener("abort", aborted, { once: true });
+    try {
+      action();
+    } catch (error) {
+      cleanup();
+      reject(error);
+    }
+  });
 }

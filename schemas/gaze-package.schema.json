@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/pajama-studio/gaze-studio/schemas/gaze-package.schema.json",
-  "title": "Gaze Package 0.1.0 manifest",
+  "title": "Gaze Package 0.2.0 manifest (0.1 compatible reader)",
   "type": "object",
   "required": [
     "format",
@@ -17,7 +17,10 @@
       "const": "gaze-package"
     },
     "version": {
-      "const": "0.1.0"
+      "enum": [
+        "0.1.0",
+        "0.2.0"
+      ]
     },
     "coordinateSystem": {
       "const": "stimulus-pixels-top-left"
@@ -66,7 +69,10 @@
           "exclusiveMinimum": 0
         },
         "mediaType": {
-          "enum": ["video", "image"]
+          "enum": [
+            "video",
+            "image"
+          ]
         },
         "mediaName": {
           "type": "string"
@@ -76,14 +82,21 @@
           "pattern": "^media/"
         },
         "recordedEye": {
-          "enum": ["left", "right", "cyclopean"]
+          "enum": [
+            "left",
+            "right",
+            "cyclopean"
+          ]
         },
         "anchors": {
           "type": "array",
           "minItems": 1,
           "items": {
             "type": "object",
-            "required": ["gaze", "media"],
+            "required": [
+              "gaze",
+              "media"
+            ],
             "properties": {
               "gaze": {
                 "type": "integer"
@@ -96,13 +109,145 @@
         },
         "source": {
           "type": "object",
-          "required": ["license", "synthetic"],
+          "required": [
+            "license",
+            "synthetic"
+          ],
           "properties": {
             "license": {
               "type": "string"
             },
             "synthetic": {
               "type": "boolean"
+            }
+          }
+        },
+        "videoTracks": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "role",
+              "name",
+              "url",
+              "width",
+              "height",
+              "duration",
+              "start",
+              "end",
+              "anchors"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "enum": [
+                  "left-eye",
+                  "right-eye",
+                  "context"
+                ]
+              },
+              "name": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string",
+                "pattern": "^media/"
+              },
+              "width": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "height": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "duration": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "anchors": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "gaze",
+                    "media"
+                  ],
+                  "properties": {
+                    "gaze": {
+                      "type": "integer"
+                    },
+                    "media": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              "frameTimes": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        },
+        "eyeSignals": {
+          "type": "array",
+          "maxItems": 1000000,
+          "items": {
+            "type": "object",
+            "required": [
+              "t",
+              "eye",
+              "confidence",
+              "pupil",
+              "pupilUnit"
+            ],
+            "properties": {
+              "t": {
+                "type": "integer"
+              },
+              "eye": {
+                "enum": [
+                  "left",
+                  "right"
+                ]
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "pupil": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "pupilUnit": {
+                "enum": [
+                  "mm",
+                  "px",
+                  "arbitrary"
+                ]
+              }
             }
           }
         }
@@ -113,7 +258,11 @@
       "minItems": 3,
       "items": {
         "type": "object",
-        "required": ["path", "sha256", "bytes"],
+        "required": [
+          "path",
+          "sha256",
+          "bytes"
+        ],
         "properties": {
           "path": {
             "type": "string",
@@ -134,7 +283,11 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name", "path", "type"],
+        "required": [
+          "name",
+          "path",
+          "type"
+        ],
         "properties": {
           "name": {
             "type": "string"

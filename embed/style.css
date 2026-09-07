@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  background: #12171f;
+  color: #b9cce7;
+  font:
+    14px system-ui,
+    sans-serif;
+}
+main {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+header {
+  padding-bottom: 24px;
+}
+header span {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #91b9ee;
+}
+h1 {
+  font-weight: 500;
+  font-size: 36px;
+  letter-spacing: -1.2px;
+  margin: 12px 0;
+}
+header p {
+  color: #6d87a9;
+}
+a {
+  color: #91b9ee;
+}

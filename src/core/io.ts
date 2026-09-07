@@ -187,6 +187,74 @@ export function validateRecording(r: Recording) {
   )
     throw new Error("Invalid media dimensions or duration.");
   validateAnchors(r.anchors);
+  if (r.videoTracks) {
+    if (
+      !Array.isArray(r.videoTracks) ||
+      r.videoTracks.length > 6 ||
+      new Set(r.videoTracks.map((t) => t.id)).size !== r.videoTracks.length
+    )
+      throw new Error("Expected at most six uniquely named video tracks.");
+    for (const t of r.videoTracks) {
+      if (
+        !t.id ||
+        !["left-eye", "right-eye", "context"].includes(t.role) ||
+        typeof t.url !== "string" ||
+        typeof t.name !== "string" ||
+        ![t.width, t.height, t.duration].every(
+          (v) => Number.isFinite(v) && v > 0,
+        ) ||
+        ![t.start, t.end].every(Number.isSafeInteger) ||
+        t.end <= t.start ||
+        t.start < 0 ||
+        t.end > r.duration
+      )
+        throw new Error("Invalid auxiliary video track.");
+      validateAnchors(t.anchors);
+      if (
+        t.frameTimes?.some(
+          (v, i, a) =>
+            !Number.isSafeInteger(v) || v < 0 || (i > 0 && v <= a[i - 1]),
+        )
+      )
+        throw new Error("Video frame timestamps must strictly increase.");
+    }
+  }
+  if (r.eyeSignals) {
+    if (!Array.isArray(r.eyeSignals) || r.eyeSignals.length > 1000000)
+      throw new Error("Too many eye signal samples.");
+    const last = new Map<string, number>();
+    for (const s of r.eyeSignals) {
+      if (
+        !Number.isSafeInteger(s.t) ||
+        !["left", "right"].includes(s.eye) ||
+        !Number.isFinite(s.confidence) ||
+        s.confidence < 0 ||
+        s.confidence > 1 ||
+        (s.pupil !== null && (!Number.isFinite(s.pupil) || s.pupil < 0)) ||
+        !["mm", "px", "arbitrary"].includes(s.pupilUnit) ||
+        s.t <= (last.get(s.eye) ?? -Infinity)
+      )
+        throw new Error("Invalid per-eye signal stream.");
+      last.set(s.eye, s.t);
+    }
+  }
+  if (r.analysisSettings) {
+    const s = r.analysisSettings;
+    if (
+      !["ivt", "idt"].includes(s.method) ||
+      ![s.velocity, s.dispersion, s.minFixation, s.maxGap].every(
+        (n) => Number.isFinite(n) && n > 0,
+      ) ||
+      !Number.isSafeInteger(s.start) ||
+      !Number.isSafeInteger(s.end) ||
+      s.start < 0 ||
+      s.end <= s.start ||
+      s.end > r.duration ||
+      typeof s.participant !== "string" ||
+      (s.aoiScope !== undefined && !["all", "automatic"].includes(s.aoiScope))
+    )
+      throw new Error("Invalid saved analysis settings.");
+  }
   const prev = new Map<string, number>();
   for (const s of r.samples) {
     if (
@@ -272,6 +340,17 @@ export async function exportPackage(r: Recording): Promise<Blob> {
   };
   if (r.frameTimes)
     files["frames.json"] = strToU8(JSON.stringify(r.frameTimes));
+  const videoTracks = [];
+  for (let i = 0; i < (r.videoTracks?.length ?? 0); i++) {
+    const { blob, url, ...metadata } = r.videoTracks![i];
+    const response = blob ? null : await fetch(url);
+    if (response && !response.ok)
+      throw new Error(`Cannot export ${metadata.name}.`);
+    const media = blob ?? (await response!.blob());
+    const path = `media/track-${i}.${media.type.includes("webm") ? "webm" : "mp4"}`;
+    files[path] = new Uint8Array(await media.arrayBuffer());
+    videoTracks.push({ ...metadata, url: path });
+  }
   const raw = [...(r.rawFiles ?? [])];
   if (!raw.length && r.source.rawUrl) {
     const response = await fetch(r.source.rawUrl);
@@ -299,11 +378,11 @@ export async function exportPackage(r: Recording): Promise<Blob> {
   } = r;
   const manifest = {
     format: "gaze-package",
-    version: "0.1.0",
+    version: "0.2.0",
     coordinateSystem: "stimulus-pixels-top-left",
     timeUnit: "microseconds",
     clockExtrapolation: "linear",
-    recording: { ...metadata, mediaUrl: `media/stimulus.${ext}` },
+    recording: { ...metadata, videoTracks, mediaUrl: `media/stimulus.${ext}` },
     rawSources: rawEntries,
     files: await Promise.all(
       Object.entries(files).map(async ([path, bytes]) => ({
@@ -313,6 +392,13 @@ export async function exportPackage(r: Recording): Promise<Blob> {
       })),
     ),
   };
+  if (
+    Object.values(files).reduce((sum, b) => sum + b.length, 0) >
+    128 * 1024 * 1024
+  )
+    throw new Error(
+      "Combined media and raw files exceed the 128 MiB portable limit. Export a shorter trial.",
+    );
   files["manifest.json"] = strToU8(JSON.stringify(manifest, null, 2));
   return new Blob([zipSync(files, { level: 0 }) as Uint8Array<ArrayBuffer>], {
     type: "application/zip",
@@ -338,7 +424,7 @@ export async function importPackage(blob: Blob): Promise<Recording> {
   const manifest = JSON.parse(strFromU8(files["manifest.json"]));
   if (
     manifest.format !== "gaze-package" ||
-    manifest.version !== "0.1.0" ||
+    !["0.1.0", "0.2.0"].includes(manifest.version) ||
     manifest.coordinateSystem !== "stimulus-pixels-top-left" ||
     manifest.timeUnit !== "microseconds"
   )
@@ -393,6 +479,13 @@ export async function importPackage(blob: Blob): Promise<Recording> {
     frameTimes: files["frames.json"]
       ? JSON.parse(strFromU8(files["frames.json"]))
       : undefined,
+    videoTracks: metadata.videoTracks?.map((track: any) => {
+      if (!files[track.url]) throw new Error("Missing auxiliary video.");
+      const blob = new Blob([files[track.url] as Uint8Array<ArrayBuffer>], {
+        type: track.url.endsWith(".webm") ? "video/webm" : "video/mp4",
+      });
+      return { ...track, blob, url: URL.createObjectURL(blob) };
+    }),
     mediaUrl: URL.createObjectURL(mediaBlob),
     mediaBlob,
     rawFiles,

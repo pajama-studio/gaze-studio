@@ -14,3 +14,8 @@ Application source is MIT. This does not change the licenses of datasets, fonts,
 | DETR model                                                                 | [Cloudflare model endpoint](https://developers.cloudflare.com/workers-ai/models/detr-resnet-50/)   | Hosted inference; weights are not redistributed by this repository. Follow the provider/model terms.                                                                                                                                                                              |
 
 Original downloads and read-only research checkouts in `artifacts/` are excluded from Git. Derived sample transformations and upstream hashes are recorded in [gazemining-provenance.json](docs/gazemining-provenance.json). No proprietary SDK, decompiled software or private Cogix implementation is included.
+
+
+## Binocular source data
+
+Through the Eyes of Emotion: Yang et al., IMWUT 2025, DOI 10.1145/3749545; Zenodo raw record 16794721 (CC BY 4.0). Original authors retain attribution; the 20-second P01/0a replay is a re-encoded research derivative. Film content retains third-party rights. Full selected source files are archived separately. HARMONIC: Newman et al., DOI 10.1177/02783649211050677; official sample stored privately because explicit data redistribution terms were not located. See [source details](docs/BINOCULAR.md).

@@ -32,6 +32,10 @@ export async function loadLocal(): Promise<Recording[]> {
       resolve(
         r.result.map((recording: Recording) => ({
           ...recording,
+          videoTracks: recording.videoTracks?.map((t) => ({
+            ...t,
+            url: t.blob ? URL.createObjectURL(t.blob) : t.url,
+          })),
           mediaUrl: recording.mediaBlob
             ? URL.createObjectURL(recording.mediaBlob)
             : recording.mediaUrl,
@@ -82,6 +86,7 @@ export async function saveCloud(
     mediaUrl: _,
     cloudId: __,
     rawFiles,
+    videoTracks,
     ...metadata
   } = r;
   const media = mediaBlob ?? (await fetch(r.mediaUrl).then((r) => r.blob()));
@@ -103,6 +108,19 @@ export async function saveCloud(
     object: `raw-${i}`,
     type: source.blob.type,
   }));
+  const trackObjects: [string, Blob][] = [];
+  const tracks = [];
+  for (let i = 0; i < (videoTracks?.length ?? 0); i++) {
+    const { url, blob, ...track } = videoTracks![i];
+    const response = blob ? null : await fetch(url);
+    if (response && !response.ok)
+      throw new Error(`Cannot upload ${track.name}.`);
+    const media = blob ?? (await response!.blob());
+    if (media.size > 100 * 1024 * 1024)
+      throw new Error("Auxiliary video exceeds 100 MiB.");
+    trackObjects.push([`track-${i}`, media]);
+    tracks.push({ ...track, url: `track-${i}` });
+  }
   const { id } = await api("/recordings", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -112,6 +130,7 @@ export async function saveCloud(
       manifest: {
         ...metadata,
         mediaMime: media.type,
+        videoTracks: tracks,
         rawSources,
         analysisVersion: analysis?.version,
       },
@@ -120,6 +139,7 @@ export async function saveCloud(
   try {
     const objects: [string, Blob][] = [
       ["media", media],
+      ...trackObjects,
       ["gaze.csv", new Blob([csv(samples)], { type: "text/csv" })],
       [
         "aois.json",
@@ -175,6 +195,10 @@ export async function loadCloud(id: string): Promise<Recording> {
     ),
     aois,
     mediaUrl: `/api/recordings/${id}/objects/media`,
+    videoTracks: metadata.videoTracks?.map((t: any) => ({
+      ...t,
+      url: `/api/recordings/${id}/objects/${t.url}`,
+    })),
   };
   validateRecording(r);
   return r;

@@ -1,0 +1,20 @@
+[package]
+name = "gaze-core"
+version = "0.2.0"
+edition = "2024"
+license = "MIT"
+repository = "https://github.com/pajama-studio/gaze-studio"
+description = "Portable eye tracking event and AOI analysis kernels"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+wasm-bindgen = "0.2"
+
+[profile.release]
+lto = true
+opt-level = "s"
+codegen-units = 1

@@ -1,5 +1,5 @@
 import type { Analysis, Fixation, Gaze, Recording, Settings } from "./types";
-import { contains } from "./aoi";
+import { contains, isAutomaticAOI } from "./aoi";
 import { mapTime } from "./time";
 export function quantile(values: number[], q: number) {
   if (!values.length) return 0;
@@ -110,7 +110,10 @@ export function analyze(recording: Recording, settings: Settings): Analysis {
     group.push(s);
     groups.set(s.participant, group);
   }
-  const aois = recording.aois.filter((a) => a.accepted);
+  const aois = recording.aois.filter(
+    (a) =>
+      a.accepted && (settings.aoiScope !== "automatic" || isAutomaticAOI(a)),
+  );
   const metrics = aois.map((a) => ({
     id: a.id,
     name: a.name,

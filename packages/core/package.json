@@ -1,0 +1,17 @@
+{
+  "name": "@pajama-studio/gaze-core",
+  "version": "0.2.0",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts",
+    "./types": "./src/types.ts",
+    "./time": "./src/time.ts",
+    "./aoi": "./src/aoi.ts"
+  },
+  "files": [
+    "src",
+    "wasm",
+    "style.css"
+  ]
+}

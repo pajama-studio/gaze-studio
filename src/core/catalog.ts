@@ -1,6 +1,33 @@
 export const DATASETS = [
   {
+    name: "Through the Eyes of Emotion",
+    replay: "emotion-p01-0a",
+    tag: "BINOCULAR EYE VIDEOS",
+    content:
+      "Real left/right infrared eye videos, VR scene recording, gaze and per-eye pupil signals. A 20-second P01 excerpt is hosted on our Cloudflare storage.",
+    input: "Left eye + right eye + scene + gaze",
+    use: "Synchronized camera replay, pupil traces and automatic object AOIs",
+    license: "Dataset CC BY 4.0; third-party film stimulus retains its rights.",
+    access:
+      "Direct replay · raw sources archived in R2 · estimated gaze/scene alignment",
+    url: "https://zenodo.org/records/16794721",
+  },
+  {
+    name: "HARMONIC",
+    tag: "BINOCULAR + SCENE CLOCKS",
+    content:
+      "Both infrared eye cameras, glasses scene video and per-frame capture timestamps during robot-assisted feeding.",
+    input: "Left eye + right eye + world + gaze + timestamps",
+    use: "Dropped-frame synchronization and multimodal research",
+    license:
+      "Public research download; no explicit data redistribution license found.",
+    access:
+      "Official sample archived privately in R2 · reproducible local converter",
+    url: "https://harplab.github.io/harmonic/",
+  },
+  {
     name: "GazeMining",
+    replay: "gazemining",
     tag: "WEB CONTENT",
     content: "Browser recordings, gaze, frame timestamps and DOM observations.",
     input: "Stimulus + gaze",

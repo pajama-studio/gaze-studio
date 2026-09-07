@@ -7,6 +7,7 @@ const context = await browser.newContext({
   viewport: { width: 1440, height: 1000 },
   acceptDownloads: true,
 });
+await context.addInitScript(()=>{if(!localStorage.getItem("gaze-studio-active"))localStorage.setItem("gaze-studio-active","gazemining-p1-amazon");});
 const page = await context.newPage(),
   errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
@@ -49,11 +50,11 @@ try {
     await page.locator("video").evaluate((v) => (v.currentTime = 2));
     await expect(page.locator(".time-display")).toContainText("00:02.00");
   });
-  const bounds = await page.locator("svg.overlay").boundingBox();
   await check("manual rectangle annotation", async () => {
     await page
       .getByRole("button", { name: "Draw rectangle", exact: true })
       .click();
+    const bounds = await page.locator("svg.overlay").boundingBox();
     await page.mouse.move(
       bounds.x + bounds.width * 0.25,
       bounds.y + bounds.height * 0.25,
@@ -186,6 +187,7 @@ try {
       isMobile: true,
       hasTouch: true,
     });
+    await mobile.addInitScript(()=>localStorage.setItem("gaze-studio-active","gazemining-p1-amazon"));
     const p = await mobile.newPage();
     await p.goto(base);
     await expect(

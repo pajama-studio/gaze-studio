@@ -1,4 +1,6 @@
 /// <reference types="@cloudflare/workers-types" />
+import { datasetRoute } from "./datasets";
+import { WorkersAIDetector } from "./detectors";
 interface Env {
   DB: D1Database;
   DATA: R2Bucket;
@@ -76,7 +78,7 @@ async function bodyBytes(request: Request, maximum: number) {
 }
 async function serveObject(
   request: Request,
-  env: Env,
+  env: { DATA: R2Bucket },
   key: string,
   publicExample = false,
 ): Promise<Response> {
@@ -134,7 +136,7 @@ async function handler(request: Request, env: Env): Promise<Response> {
   if (path === "/api/health")
     return json({
       service: "gaze-studio",
-      version: "0.1.0",
+      version: "0.2.0",
       storage: env.CLOUD_ENABLED === "true",
       ai: Boolean(env.AI),
       maxObjectBytes: Number(env.MAX_OBJECT_BYTES),
@@ -145,6 +147,8 @@ async function handler(request: Request, env: Env): Promise<Response> {
     ["GET", "HEAD"].includes(request.method)
   )
     return serveObject(request, env, "examples/gazemining-amazon.webm", true);
+  const datasetResponse = await datasetRoute(request, env, serveObject);
+  if (datasetResponse) return datasetResponse;
   if (env.CLOUD_ENABLED !== "true")
     fail("Cloud storage is not configured. Local tools are ready to use.", 503);
   if (!["GET", "HEAD"].includes(request.method)) {
@@ -240,8 +244,9 @@ async function handler(request: Request, env: Env): Promise<Response> {
       1,
       Number(env.AI_DAILY_LIMIT),
     );
-    const model = "@cf/facebook/detr-resnet-50";
-    const result = await env.AI.run(model, { image: [...bytes] });
+    const detector = new WorkersAIDetector(env.AI);
+    const model = detector.model;
+    const result = await detector.detect(bytes);
     const id = crypto.randomUUID();
     await env.DB.prepare("INSERT INTO detections VALUES(?,?,?,?,?)")
       .bind(id, owner, model, Date.now(), JSON.stringify(result))
@@ -288,11 +293,12 @@ async function handler(request: Request, env: Env): Promise<Response> {
         "analysis.json",
         "frames.json",
       ].includes(name) &&
-      !/^raw-\d$/.test(name)
+      !/^raw-\d$/.test(name) &&
+      !/^track-[0-5]$/.test(name)
     )
       fail("Unsupported object name.");
     if (
-      name === "media" &&
+      (name === "media" || name.startsWith("track-")) &&
       ![
         "video/mp4",
         "video/webm",
@@ -324,7 +330,7 @@ async function handler(request: Request, env: Env): Promise<Response> {
       env.DATA.put(key, stream.readable, {
         httpMetadata: {
           contentType:
-            name === "media"
+            name === "media" || name.startsWith("track-")
               ? (request.headers.get("Content-Type") ??
                 "application/octet-stream")
               : name.startsWith("raw-")

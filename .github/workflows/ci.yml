@@ -13,13 +13,23 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - uses: dtolnay/rust-toolchain@1.94.1
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: crates/gaze-core
+      - run: cargo install wasm-pack --version 0.15.0 --locked
       - run: npm ci
+      - run: npm run test:rust
+      - run: npm run build:wasm
       - run: npm test
-      - run: npm run build
+      - run: npm run build:ui
       - run: npx tsc --noEmit --target ES2022 --module ESNext --moduleResolution Bundler --skipLibCheck worker/index.ts
       - run: npx playwright install --with-deps chromium
       - run: npx wrangler d1 migrations apply gaze-studio --local --config wrangler.test.jsonc
       - run: npx wrangler r2 object put gaze-studio-test/examples/gazemining-amazon.webm --file public/datasets/gazemining-amazon.webm --content-type video/webm --local --config wrangler.test.jsonc
+      - run: node scripts/seed-ci-library.mjs
       - name: Verify browser and local Cloudflare APIs
         run: |
           npx wrangler dev --port 8798 --config wrangler.test.jsonc > /tmp/gaze-worker.log 2>&1 &
@@ -29,6 +39,9 @@ jobs:
           done
           BASE_URL=http://127.0.0.1:8798 node scripts/verify-api.mjs
           BASE_URL=http://127.0.0.1:8798 node scripts/verify-browser.mjs
+          BASE_URL=http://127.0.0.1:8798 node scripts/verify-replay.mjs
+          BASE_URL=http://127.0.0.1:8798 node scripts/verify-binocular.mjs
+          BASE_URL=http://127.0.0.1:8798 node scripts/verify-editor.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

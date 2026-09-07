@@ -6,3 +6,7 @@ dist/
 test-results/
 artifacts/
 .DS_Store
+
+crates/*/target/
+packages/analysis/wasm/
+.venv*/

@@ -1,0 +1,17 @@
+{
+  "name": "@pajama-studio/gaze-analysis",
+  "version": "0.2.0",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src",
+    "wasm",
+    "style.css"
+  ],
+  "dependencies": {
+    "@pajama-studio/gaze-core": "0.2.0"
+  }
+}
